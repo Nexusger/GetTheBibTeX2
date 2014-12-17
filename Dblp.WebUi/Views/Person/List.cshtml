@@ -1,0 +1,30 @@
+﻿@using System.Web.Mvc
+@using Dblp.Domain.Entities
+@model IEnumerable<Person>
+
+@{
+    ViewBag.Title = "Personen";
+}
+<h1>@ViewBag.Title</h1>
+@foreach (var p in Model)
+{
+    <div class="well">
+        <h3>@p.Key</h3>
+        <strong>Bekannte Namen:</strong>
+        @foreach (var name in p.Names)
+        {
+            <p>@name</p>
+        }
+        @if (p.Url.Any())
+        {
+            <strong>Bekannte Urls:</strong>
+            <ul>
+                @foreach (var url in p.Url)
+                {
+                <li><a href="@url">Klick mich</a></li>
+                }
+            </ul>
+        }
+        <span class="lead">Eingefügt am @p.Mdate</span>
+    </div>
+}

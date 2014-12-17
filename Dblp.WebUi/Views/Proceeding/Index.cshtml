@@ -1,0 +1,29 @@
+﻿@model List<Dblp.Domain.Entities.Proceeding>
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h1>@ViewBag.Title</h1>
+@foreach (var p in Model)
+{
+    <div class="well">
+        <h3>@p.Key</h3>
+        <strong>Bekannte Namen:</strong>
+        @foreach (var name in p.Editors)
+        {
+            <p>@name</p>
+        }
+        @if (p.Ee.Any())
+        {
+            <strong>Bekannte Urls:</strong>
+            <ul>
+                @foreach (var url in p.Ee)
+                {
+                    <li><a href="@url">Klick mich</a></li>
+                }
+            </ul>
+        }
+        <span class="lead">Eingefügt am @p.MDate</span>
+    </div>
+}

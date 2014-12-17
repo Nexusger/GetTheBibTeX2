@@ -1,0 +1,31 @@
+﻿@using Dblp.WebUi.Helpers
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/Content/typeahead.css" rel="stylesheet" />
+    <script src="/Scripts/jquery-1.10.2.js"></script>
+    <script src="/Scripts/typeahead.jquery.js"></script>
+    <script src="/Scripts/bloodhound.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse" role="navigation">
+        <a class="navbar-brand" href="#">Get The BibTeX</a>
+        <ul class="nav navbar-nav">
+            @Html.MenuItem("Home", "Index", "Home")
+            @Html.MenuItemWithGlyphIcon("Warenkorb", "Index", "ShoppingCart", "glyphicon glyphicon-shopping-cart")
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            @Html.MenuItem("Status", "Index", "Status")
+            @Html.MenuItem("About", "Index", "About")
+        </ul>
+    </div>
+    <div class="row panel">
+        <div class="col-xs-8 col-md-offset-2">@RenderBody()</div>
+    </div>
+</body>
+</html>

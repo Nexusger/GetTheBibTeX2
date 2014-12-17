@@ -1,0 +1,19 @@
+﻿@model Dblp.WebUi.Models.ShoppingCartViewModel
+@{
+    bool resultsAvailable = Model != null && Model.SelectedItems != null && Model.SelectedItems.Count > 0;
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <h2>Folgende Einträge wird die BibTeX-Datei enthalten</h2>
+    @if (resultsAvailable)
+    {
+    <ul>
+       @foreach (var searchResult in Model.SelectedItems)
+        {
+            <li><input type="checkbox"> @searchResult.DisplayText</li>
+        }
+    </ul>
+    }
+</div>
+

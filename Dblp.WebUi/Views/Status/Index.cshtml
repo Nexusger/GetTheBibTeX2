@@ -1,0 +1,24 @@
+﻿@model Dblp.WebUi.Models.StatusViewModel
+
+@{
+    ViewBag.Title = "Status";
+}
+<div class="container">
+    <h2>Status</h2>
+    <div class="well">
+        <table>
+            <thead>
+                <tr>
+                    <td>Last Updated</td>
+                    <td>Anzahl Autoren</td>
+                    <td>Anzahl Konferenzen</td>
+                </tr>
+            </thead>
+            <tr>
+                <td>@Model.LastUpdated</td>
+                <td>@Model.NumberOfAuthors</td>
+                <td>@Model.NumberOfConferences</td>
+            </tr>
+        </table>
+    </div>
+</div>
