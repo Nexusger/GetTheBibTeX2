@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Dblp.Domain.Entities;
-using Dblp.WebUi.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Dblp.Domain.Test
@@ -12,7 +11,7 @@ namespace Dblp.Domain.Test
         public void AddItemTest_GivenOneItemIsAdded_ReturnOneAddedItem()
         {
             //Arrange
-            var searchResult = new SearchResult("homepages/r/DawkinsRichard", "Richard Dawkins",
+            var searchResult = new SearchResult("homepages/r/DawkinsRichard", "Richard Dawkins",0,
                 SearchResultSourceType.Person);
 
             var target = new ShoppingCart();
@@ -29,7 +28,7 @@ namespace Dblp.Domain.Test
         public void AddItemTest_GivenOneItemIsAddedTwice_ReturnOneAddedItem()
         {
             //Arrange
-            var searchResult = new SearchResult("homepages/r/DawkinsRichard", "Richard Dawkins",
+            var searchResult = new SearchResult("homepages/r/DawkinsRichard", "Richard Dawkins",0,
                 SearchResultSourceType.Person);
 
             var target = new ShoppingCart();
@@ -47,7 +46,7 @@ namespace Dblp.Domain.Test
         public void RemoveItemTest_GivenOneItemIsAddedTwiceAndRemoved_ReturnZeroItems()
         {
             //Arrange
-            var searchResult = new SearchResult("homepages/r/DawkinsRichard", "Richard Dawkins",
+            var searchResult = new SearchResult("homepages/r/DawkinsRichard", "Richard Dawkins",0,
                 SearchResultSourceType.Person);
 
             var target = new ShoppingCart();
@@ -65,7 +64,7 @@ namespace Dblp.Domain.Test
         public void RemoveItemTest_GivenNonExistentItemIsRemoved_ReturnZeroItems()
         {
             //Arrange
-            var searchResult = new SearchResult("homepages/r/DawkinsRichard", "Richard Dawkins",
+            var searchResult = new SearchResult("homepages/r/DawkinsRichard", "Richard Dawkins",0,
                 SearchResultSourceType.Person);
 
             var target = new ShoppingCart();
@@ -82,7 +81,7 @@ namespace Dblp.Domain.Test
         public void ClearTest_GivenOneItemIsAddedAndCartIsCleared_ReturnZeroItems()
         {
             //Arrange
-            var searchResult = new SearchResult("homepages/r/DawkinsRichard", "Richard Dawkins",
+            var searchResult = new SearchResult("homepages/r/DawkinsRichard", "Richard Dawkins",0,
                 SearchResultSourceType.Person);
 
             var target = new ShoppingCart();
