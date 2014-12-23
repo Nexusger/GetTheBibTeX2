@@ -19,5 +19,6 @@ namespace Dblp.Domain.Concrete
         }
         public IEnumerable<Publication> Publications { get; private set; }
         public IEnumerable<Proceeding> Proceedings { get; private set; }
+        public IEnumerable<SearchResult> SearchResults { get; private set; }
     }
 }

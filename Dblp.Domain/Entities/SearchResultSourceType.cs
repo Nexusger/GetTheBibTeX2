@@ -1,4 +1,4 @@
-﻿namespace Dblp.WebUi.Models
+﻿namespace Dblp.Domain.Entities
 {
     public enum SearchResultSourceType
     {

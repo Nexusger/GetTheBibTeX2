@@ -8,7 +8,7 @@ namespace Dblp.Domain.Abstract
         IEnumerable<Person> People { get; }
         IEnumerable<Publication> Publications { get; }
 
-        IEnumerable<Proceeding> Proceedings { get; }  
-
+        IEnumerable<Proceeding> Proceedings { get; }
+        IEnumerable<SearchResult> SearchResults { get; }
     }
 }
