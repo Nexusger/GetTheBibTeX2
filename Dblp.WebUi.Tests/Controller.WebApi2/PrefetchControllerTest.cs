@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Routing;
 using Dblp.Domain.Abstract;
 using Dblp.Domain.Entities;
 using Dblp.WebUi.Controllers;
@@ -29,7 +26,6 @@ namespace Dblp.WebUi.Tests.Controller.WebApi2
             //Act
             var target = new PrefetchController(null);
         }
-
         [TestMethod]
         public void GetSearchResultsTest_GivenIdExistInRepo_ReturnOneEntry()
         {

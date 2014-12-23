@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web;
+using System.Web.Http;
 using System.Web.Routing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -34,8 +35,7 @@ namespace Dblp.WebUi.Tests
             string httpMethod = "GET")
         {
             //arrange
-            var routes = new RouteCollection();
-            RouteConfig.RegisterRoutes(routes);
+            var routes = RegisterRoutes();
 
             //Act
             var result = routes.GetRouteData(createHttpContext(url, httpMethod));
@@ -43,6 +43,22 @@ namespace Dblp.WebUi.Tests
             //Assert
             Assert.IsNotNull(result);
             Assert.IsTrue(TestIncommingRouteResult(result,controller,action,routeProperties));
+        }
+
+        private void TestRouteGetMatchDefault(string url)
+        {
+            //arrange
+            var routes = RegisterRoutes();
+
+            //Act
+            var result = routes.GetRouteData(createHttpContext(url, "GET"));
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Route);
+
+            TestIncommingRouteResult(result, (string)((System.Web.Routing.Route) (result.Route)).Defaults["controller"],
+               (string) ((System.Web.Routing.Route) (result.Route)).Defaults["action"]);
         }
 
         private bool TestIncommingRouteResult(RouteData routeResult, string controller, string action,
@@ -72,12 +88,18 @@ namespace Dblp.WebUi.Tests
         }
 
 
+        private RouteCollection RegisterRoutes()
+        {
+            var routes = new RouteCollection();
+            RouteConfig.RegisterRoutes(routes);
+            var config = new HttpConfiguration();
+            WebApiConfig.Register(config);
+            return routes;
+        }
         private void TestrouteFail(string url)
         {
             //arrange
-            var routes = new RouteCollection();
-            RouteConfig.RegisterRoutes(routes);
-
+            var routes = RegisterRoutes();
             //act
             var result = routes.GetRouteData(createHttpContext(url));
 
@@ -91,20 +113,19 @@ namespace Dblp.WebUi.Tests
             TestrouteFail("~/Admin/Index/Segment");
         }
         [TestMethod]
-        public void TestIncommingRoutes_GivenTooFewSegments_RouteDidNotMatch()
+        public void TestIncommingRoutes_GivenTooFewSegments_DefaultRouteDidMatch()
         {
-            TestrouteFail("~/Admin");
+            TestRouteGetMatchDefault("~/Admin");
         }
         [TestMethod]
         public void TestIncommingRoutes_GivenValidUrl_RouteDidMatch()
         {
             TestRouteMatch("~/Admin/Index", "Admin", "Index");
         }
-
         [TestMethod]
-        public void TestIncommingRoutes_GivenInvalidUrl_DefaultRouteDidMatch()
+        public void TestIncommingRoutes_GivenValidUrl_RouteDidMatch1()
         {
-            TestRouteMatch("~/Admin/Hallo/Welt", "Home", "Index");
+            TestRouteMatch("~/api/Prefetch", "api", "Prefetch");
         }
 
 
