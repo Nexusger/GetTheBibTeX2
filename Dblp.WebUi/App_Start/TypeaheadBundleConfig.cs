@@ -1,8 +1,9 @@
 using System.Web.Optimization;
+using Dblp.WebUi;
 
-[assembly: WebActivatorEx.PostApplicationStartMethod(typeof(Dblp.WebUi.App_Start.TypeaheadBundleConfig), "RegisterBundles")]
+[assembly: WebActivatorEx.PostApplicationStartMethod(typeof(TypeaheadBundleConfig), "RegisterBundles")]
 
-namespace Dblp.WebUi.App_Start
+namespace Dblp.WebUi
 {
 	public class TypeaheadBundleConfig
 	{
