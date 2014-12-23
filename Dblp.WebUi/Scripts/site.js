@@ -2,18 +2,17 @@
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace("DisplayText"),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     limit: 10,
-    prefetch: {
-        url: '/api/Prefetch/publications'
-    }
+    prefetch: '/api/Prefetch/publications',
+    remote: '/api/Query/%QUERY'
 });
 topSearchResults.initialize();
 var topPersonSearchResults = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace("DisplayText"),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     limit: 10,
-    prefetch: {
-        url: '/api/Prefetch/person'
-    }
+    prefetch: '/api/Prefetch/person',
+    remote: '/api/Query/%QUERY'
+
 });
 topPersonSearchResults.initialize();
 var searches = [{ "Key": "homepages/d/TorbenDohrn", "FoundBy": "none", "DisplayText": "Torben Dohrn", "SearchResultSourceType": 0 }, { "Key": "homepages/d/FabianDohrn", "FoundBy": "none", "DisplayText": "Fred Dohrn", "SearchResultSourceType": 0 }, { "Key": "conf/l/lak", "FoundBy": "none", "DisplayText": "Learning Analyics Konference", "SearchResultSourceType": 1 }];
@@ -48,8 +47,20 @@ $(document).ready(function () {
         // is compatible with the typeahead jQuery plugin
         source: topSearchResults.ttAdapter(),
         templates: {
-            header: '<h3 class="league-name">Publikationen</h3>'
-        }
+            header: '<h3 class="league-name">Publikationen</h3>',
+            empty: [
+                '<div class="empty-message">',
+                'Es konnten keine Publikationen gefunden werden',
+                '</div>'
+            ].join('\n'),
+            suggestion: function (sr) {
+                if (sr.Relation == null) {
+                    return sr.DisplayText;
+                } else {
+                    return sr.DisplayText.concat(" (", sr.Relation,")");
+                }
+            }
+}
     },
     {
         name: 'topPersonSearchResults',

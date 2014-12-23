@@ -21,21 +21,34 @@ namespace Dblp.Domain.Concrete
             {
                 foreach (var name in person.Names)
                 {
-                    _searchResultRepo.Add(new SearchResult(person.Key, name, 0,SearchResultSourceType.Person));
+                    _searchResultRepo.Add(new SearchResult(person.Key, name, 0,SearchResultSourceType.Person,""));
                 }
             }
             foreach (var proceeding in Proceedings)
             {
                 foreach (var name in proceeding.Editors)
                 {
-                    _searchResultRepo.Add(new SearchResult(proceeding.Key, name, 0, SearchResultSourceType.Paper));
+                    _searchResultRepo.Add(new SearchResult(proceeding.Key, name, 0, SearchResultSourceType.Paper,"Editor von "+proceeding.Title));
                 }
                 foreach (var name in proceeding.Authors)
                 {
-                    _searchResultRepo.Add(new SearchResult(proceeding.Key, name, 0, SearchResultSourceType.Paper));
+                    _searchResultRepo.Add(new SearchResult(proceeding.Key, name, 0, SearchResultSourceType.Paper, "Autor von "+proceeding.Title));
                 }
-                _searchResultRepo.Add(new SearchResult(proceeding.Key, proceeding.Series, 0, SearchResultSourceType.Paper));
-                _searchResultRepo.Add(new SearchResult(proceeding.Key, proceeding.BookTitle, 0, SearchResultSourceType.Paper));
+                if (string.IsNullOrEmpty(proceeding.Series))
+                {
+                    _searchResultRepo.Add(new SearchResult(proceeding.Key, proceeding.Series, 0,
+                        SearchResultSourceType.Paper, ""));}
+                if (string.IsNullOrEmpty(proceeding.BookTitle))
+                {
+                    _searchResultRepo.Add(new SearchResult(proceeding.Key, proceeding.BookTitle, 0,
+                        SearchResultSourceType.Paper, ""));
+                }
+                if (string.IsNullOrEmpty(proceeding.Title)) 
+                {
+                    _searchResultRepo.Add(new SearchResult(proceeding.Key, proceeding.Title, 0,
+                        SearchResultSourceType.Paper, ""));
+                }
+                ;
             }
         }
 
