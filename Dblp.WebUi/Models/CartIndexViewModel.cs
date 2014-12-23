@@ -1,6 +1,6 @@
 ﻿using Dblp.Domain.Entities;
 
-namespace Dblp.Domain
+namespace Dblp.WebUi.Models
 {
     public class CartIndexViewModel
     { public ShoppingCart Cart { get; set; } 

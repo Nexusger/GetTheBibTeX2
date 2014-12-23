@@ -1,17 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
+using Dblp.Domain.Abstract;
+using Dblp.Domain.Entities;
+using Dblp.WebUi.Models;
 
 namespace Dblp.WebUi.Controllers
 {
     public class ShoppingCartController : Controller
     {
-        // GET: ShoppingCart
-        public ActionResult Index()
+        private IDblpRepository _repo;
+
+        public ShoppingCartController(IDblpRepository repo)
         {
-            return View();
+            _repo = repo;
         }
+
+        [HttpPost]
+        public RedirectToRouteResult AddItem(string dblpKey, string returnUrl)
+        {
+            var searchResult = _repo.SearchResults.FirstOrDefault(sr => sr.Key == dblpKey);
+            if (searchResult != null)
+            {
+                GetCart().AddItem(searchResult);
+            }
+            return RedirectToAction("Index", new { returnUrl });
+        }
+
+        public RedirectToRouteResult RemoveFromCart(string dblpKey, string returnUrl)
+        {
+            var searchResult = _repo.SearchResults.FirstOrDefault(sr => sr.Key == dblpKey);
+            if (searchResult != null)
+            {
+                GetCart().RemoveItem(searchResult);
+            }
+            return RedirectToAction("Index", new { returnUrl });
+        }
+
+        private ShoppingCart GetCart()
+        {
+            var cart = (ShoppingCart)Session["ShoppingCart"];
+            if (cart == null)
+            {
+                cart = new ShoppingCart();
+                Session["ShoppingCart"] = cart;
+            }
+            return cart;
+        }
+
+        public ViewResult Index(string returnUrl)
+        { return View(new CartIndexViewModel { Cart = GetCart(), ReturnUrl = returnUrl }); }
     }
 }
