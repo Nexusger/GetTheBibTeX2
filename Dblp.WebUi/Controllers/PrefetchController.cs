@@ -1,33 +1,29 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
+using Dblp.Domain.Abstract;
 using Dblp.Domain.Entities;
-using Dblp.WebUi.Models;
 
 namespace Dblp.WebUi.Controllers
 {
     public class PrefetchController : ApiController
     {
-        // GET: api/Prefetch
-        public IEnumerable<SearchResultViewModel> Get()
-        {
-            var mockResult = new List<SearchResultViewModel>()
-            {
-                new SearchResultViewModel("homepages/d/TorbenDohrn", "none", "Torben Dohrn",
-                    SearchResultSourceType.Person),
-                    new SearchResultViewModel("homepages/d/FabianDohrn", "none", "Fabian Dohrn",
-                    SearchResultSourceType.Person),
-                    new SearchResultViewModel("conf/l/lak", "none", "Learning Analyics Konference",
-                    SearchResultSourceType.Conference)
-            };
+        private IDblpRepository _repository;
 
-            return mockResult;
+        public PrefetchController(IDblpRepository repository)
+        {
+            _repository = repository;
         }
 
-        // GET: api/Prefetch/5
-        public SearchResultViewModel Get(int id)
+        // GET: api/Prefetch
+        [HttpGet]
+        public IEnumerable<SearchResult> GetSearchResults(string id)
         {
-            return new SearchResultViewModel("homepages/d/TorbenDohrn", "none", "Torben Dohrn",
-                SearchResultSourceType.Person);
+            if (id.Equals("person"))
+            {
+                return _repository.SearchResults.Where(sr => sr.SearchResultSourceType == SearchResultSourceType.Person).Take(100);
+            }
+            return _repository.SearchResults.Where(sr => sr.SearchResultSourceType != SearchResultSourceType.Person).Take(100);
         }
     }
 }
