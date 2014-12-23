@@ -76,8 +76,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\BibTeXContentOptions.cs" />
+    <Compile Include="Abstract\IBibTeXContentProvider.cs" />
     <Compile Include="Abstract\IDblpRepository.cs" />
     <Compile Include="Abstract\IPersonRepository.cs" />
+    <Compile Include="Concrete\ConstantBibTexContentProvider.cs" />
     <Compile Include="Concrete\EfDbContext.cs" />
     <Compile Include="Concrete\EfDblpRepository.cs" />
     <Compile Include="Concrete\XmlRepository.cs" />

@@ -30,6 +30,7 @@ namespace Dblp.WebUi.Infrastructure
         private void AddBindings()
         {
             _kernel.Bind<IDblpRepository>().To<XmlRepository>();
+            _kernel.Bind<IBibTeXContentProvider>().To<ConstantBibTexContentProvider>();
         }
     }
 }

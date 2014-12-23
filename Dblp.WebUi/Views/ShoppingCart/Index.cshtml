@@ -5,14 +5,22 @@
 }
 
 <div class="container">
-    <h2>Folgende Einträge wird die BibTeX-Datei enthalten</h2>
     @if (resultsAvailable)
     {
+        <h2>Folgende Einträge wird die BibTeX-Datei enthalten</h2>
         <ul>
             @foreach (var searchResult in Model.Cart.SearchResults)
             {
                 <li><input type="checkbox"> @searchResult.DisplayText</li>
             }
         </ul>
+        <div class="btn-group" role="group" aria-label="Download der BibTeX Datei">
+            @Html.ActionLink("Download der BibTeX Datei", "Download", "ShoppingCart",null,new {@class="btn btn-success"})
+        </div>
+    }
+    else
+    {
+        <h2>Ihr Warenkorb ist leer</h2>
+        <p>Fügen Sie @Html.ActionLink("BibTeX Einträge", "Index", "Home") hinzu.</p>
     }
 </div>

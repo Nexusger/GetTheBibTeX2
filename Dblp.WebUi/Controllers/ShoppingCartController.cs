@@ -9,10 +9,12 @@ namespace Dblp.WebUi.Controllers
     public class ShoppingCartController : Controller
     {
         private IDblpRepository _repo;
+        private IBibTeXContentProvider _bibTeXContentProvider;
 
-        public ShoppingCartController(IDblpRepository repo)
+        public ShoppingCartController(IDblpRepository repo, IBibTeXContentProvider bibTeXContentProvider)
         {
             _repo = repo;
+            _bibTeXContentProvider = bibTeXContentProvider;
         }
 
         [HttpPost]
@@ -49,5 +51,13 @@ namespace Dblp.WebUi.Controllers
 
         public ViewResult Index(string returnUrl)
         { return View(new CartIndexViewModel { Cart = GetCart(), ReturnUrl = returnUrl }); }
+
+        public FileResult Download()
+        {
+            byte[] fileBytes = _bibTeXContentProvider.GetBibTexFileBytes(BibTeXContentOptions.None);
+            string fileName = "myfile.bib";
+            return File(fileBytes, "text/x-bibtex", fileName);
+        }
+
     }
 }
