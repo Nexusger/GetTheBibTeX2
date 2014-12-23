@@ -1,19 +1,18 @@
-﻿@model Dblp.WebUi.Models.ShoppingCartViewModel
+﻿@model Dblp.WebUi.Models.CartIndexViewModel
 @{
-    bool resultsAvailable = Model != null && Model.SelectedItems != null && Model.SelectedItems.Count > 0;
-    ViewBag.Title = "Index";
+    bool resultsAvailable = Model != null && Model.Cart.SearchResults != null && Model.Cart.SearchResults.Count() > 0;
+    ViewBag.Title = "Warenkorb";
 }
 
 <div class="container">
     <h2>Folgende Einträge wird die BibTeX-Datei enthalten</h2>
     @if (resultsAvailable)
     {
-    <ul>
-       @foreach (var searchResult in Model.SelectedItems)
-        {
-            <li><input type="checkbox"> @searchResult.DisplayText</li>
-        }
-    </ul>
+        <ul>
+            @foreach (var searchResult in Model.Cart.SearchResults)
+            {
+                <li><input type="checkbox"> @searchResult.DisplayText</li>
+            }
+        </ul>
     }
 </div>
-
