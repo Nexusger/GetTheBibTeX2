@@ -50,12 +50,19 @@ namespace Dblp.WebUi.Controllers
         }
 
         public ViewResult Index(string returnUrl)
-        { return View(new CartIndexViewModel { Cart = GetCart(), ReturnUrl = returnUrl }); }
+        {
+            var cartIndexViewModel = new CartIndexViewModel
+            {
+                Cart = GetCart(), 
+                ReturnUrl = returnUrl
+            };
+            return View(cartIndexViewModel);
+        }
 
         public FileResult Download()
         {
             byte[] fileBytes = _bibTeXContentProvider.GetBibTexFileBytes(BibTeXContentOptions.None);
-            string fileName = "myfile.bib";
+            const string fileName = "myfile.bib";
             return File(fileBytes, "text/x-bibtex", fileName);
         }
 

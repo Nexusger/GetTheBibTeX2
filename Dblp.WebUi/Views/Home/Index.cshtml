@@ -2,15 +2,15 @@
 @{
     ViewBag.Title = "Durchsuchen der Dblp";
 }
-<div class="container">
-    <h2>Durchsuchen der DBLP</h2>
-    @using (Html.BeginForm("AddItem", "ShoppingCart"))
-    {
-        @Html.InputWithGlyphicon()
-        @Html.Hidden("dblpKey")
-        <input type="submit" value="Hinzufügen" />
-    }
-</div>
+
+<h2>Durchsuchen der DBLP</h2>
+@using (Html.BeginForm("AddItem", "ShoppingCart"))
+{
+    @Html.InputWithGlyphicon()
+    @Html.Hidden("dblpKey")
+    <input type="submit" value="Hinzufügen" />
+}
+
 @section JavaScript
 {
     <script type="text/javascript" src="@Url.Content("/Scripts/site.js")"></script>
