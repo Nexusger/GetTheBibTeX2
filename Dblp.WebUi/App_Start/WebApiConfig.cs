@@ -12,10 +12,16 @@ namespace Dblp.WebUi
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                name: "PrefetchApi",
+                routeTemplate: "api/Prefetch/{id}",
+                defaults: new { controller="Prefetch"}
             );
+            config.Routes.MapHttpRoute(
+                name: "QueryApi",
+                routeTemplate: "api/{controller}/{query}"
+            );
+
+
         }
     }
 }
