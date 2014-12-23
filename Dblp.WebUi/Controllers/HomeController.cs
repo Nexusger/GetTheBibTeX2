@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using Dblp.Domain.Entities;
 using Dblp.WebUi.Models;
 
 namespace Dblp.WebUi.Controllers
 {
     public class HomeController : Controller
     {
-        [HttpGet]
-        // GET: Home
         public ActionResult Index()
         {
             ViewBag.CurrentSite = "Home";
@@ -22,6 +18,9 @@ namespace Dblp.WebUi.Controllers
             };
             return View(x);
         }
+
+
         
     }
+
 }
