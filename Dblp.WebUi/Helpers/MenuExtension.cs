@@ -66,11 +66,11 @@ namespace Dblp.WebUi.Helpers
             this HtmlHelper htmlHelper)
         {
             var input = new TagBuilder("input");
-            input.Attributes.Add("type","text");
-            input.Attributes.Add("placeholder", "LAK, Romero, Analytics,...");
             input.Attributes.Add("autofocus","");
-            input.AddCssClass("form-control");
+            input.Attributes.Add("placeholder", "LAK, Romero, Analytics,...");
+            input.Attributes.Add("type","text");
             input.AddCssClass("typeahead");
+            input.AddCssClass("form-control");
             var innerSpan = new TagBuilder("span");
             innerSpan.AddCssClass("glyphicon-search");
             innerSpan.AddCssClass("glyphicon");
