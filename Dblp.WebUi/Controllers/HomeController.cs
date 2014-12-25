@@ -9,18 +9,7 @@ namespace Dblp.WebUi.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.CurrentSite = "Home";
-
-            var x = new List<SearchResultViewModel>()
-            {
-                new SearchResultViewModel("homepages/d/TorbenDohrn", "Rome", "Eine toller Typ",
-                    SearchResultSourceType.Person)
-            };
-            return View(x);
+            return View();
         }
-
-
-        
     }
-
 }
