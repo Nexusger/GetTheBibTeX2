@@ -17,13 +17,13 @@ namespace Dblp.Domain.Concrete
         {
             _repo = XElement.Load(new StreamReader(@"D:\dblp\dblp-min.xml"));
             _searchResultRepo = new List<SearchResult>();
-            foreach (var person in People)
-            {
-                foreach (var name in person.Names)
-                {
-                    _searchResultRepo.Add(new SearchResult(person.Key, name, 0,SearchResultSourceType.Person,""));
-                }
-            }
+            //foreach (var person in People)
+            //{
+            //    foreach (var name in person.Names)
+            //    {
+            //        _searchResultRepo.Add(new SearchResult(person.Key, name, 0,SearchResultSourceType.Person,""));
+            //    }
+            //}
             foreach (var proceeding in Proceedings)
             {
                 foreach (var name in proceeding.Editors)
@@ -37,18 +37,17 @@ namespace Dblp.Domain.Concrete
                 if (string.IsNullOrEmpty(proceeding.Series))
                 {
                     _searchResultRepo.Add(new SearchResult(proceeding.Key, proceeding.Series, 0,
-                        SearchResultSourceType.Paper, ""));}
+                        SearchResultSourceType.Paper, "Serie von "));}
                 if (string.IsNullOrEmpty(proceeding.BookTitle))
                 {
                     _searchResultRepo.Add(new SearchResult(proceeding.Key, proceeding.BookTitle, 0,
-                        SearchResultSourceType.Paper, ""));
+                        SearchResultSourceType.Paper, "Buchtitel von "));
                 }
                 if (string.IsNullOrEmpty(proceeding.Title)) 
                 {
                     _searchResultRepo.Add(new SearchResult(proceeding.Key, proceeding.Title, 0,
                         SearchResultSourceType.Paper, ""));
                 }
-                ;
             }
         }
 
