@@ -26,10 +26,9 @@ namespace Dblp.WebUi.Infrastructure
             return _kernel.GetAll(serviceType);
         }
 
-
         private void AddBindings()
         {
-            _kernel.Bind<IDblpRepository>().To<XmlRepository>();
+            _kernel.Bind<IDblpRepository>().To<XmlRepository>().InSingletonScope();
             _kernel.Bind<IBibTeXContentProvider>().To<ConstantBibTexContentProvider>();
         }
     }
