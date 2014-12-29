@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace Dblp.Domain.Entities
 {
@@ -19,6 +20,7 @@ namespace Dblp.Domain.Entities
         /// <summary>
         /// DBLP Key
         /// </summary>
+        [Key]
         [DataMember]
         public string Key { get; private set; }
         
