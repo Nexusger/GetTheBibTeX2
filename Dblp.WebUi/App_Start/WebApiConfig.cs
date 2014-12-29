@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Net;
+using System.Web.Http;
 
 namespace Dblp.WebUi
 {
@@ -7,18 +8,14 @@ namespace Dblp.WebUi
         public static void Register(HttpConfiguration config)
         {
             // Web-API-Konfiguration und -Dienste
-
+          
             // Web-API-Routen
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                name: "PrefetchApi",
-                routeTemplate: "api/Prefetch/{id}",
-                defaults: new { controller="Prefetch"}
-            );
-            config.Routes.MapHttpRoute(
-                name: "QueryApi",
-                routeTemplate: "api/{controller}/{query}"
+                name: "DefaultApiRoute",
+                routeTemplate: "api/{controller}/{action}/{*key}",
+                defaults: new {key = RouteParameter.Optional}
             );
 
 
