@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dblp.ExtractXml", "Dblp.ExtractXml\Dblp.ExtractXml.csproj", "{C6679176-16B9-4A77-8FB7-A4FDE6369547}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dblp.ExtractBht", "Dblp.ExtractBht\Dblp.ExtractBht.csproj", "{4E9FA386-7213-4B9A-B1C2-C83D2262BBB6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dblp.Domain", "Dblp.Domain\Dblp.Domain.csproj", "{2F98EF3F-399C-4C22-9A91-88425093BAC2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C6679176-16B9-4A77-8FB7-A4FDE6369547}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6679176-16B9-4A77-8FB7-A4FDE6369547}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6679176-16B9-4A77-8FB7-A4FDE6369547}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6679176-16B9-4A77-8FB7-A4FDE6369547}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E9FA386-7213-4B9A-B1C2-C83D2262BBB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E9FA386-7213-4B9A-B1C2-C83D2262BBB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E9FA386-7213-4B9A-B1C2-C83D2262BBB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E9FA386-7213-4B9A-B1C2-C83D2262BBB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F98EF3F-399C-4C22-9A91-88425093BAC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F98EF3F-399C-4C22-9A91-88425093BAC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F98EF3F-399C-4C22-9A91-88425093BAC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F98EF3F-399C-4C22-9A91-88425093BAC2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
