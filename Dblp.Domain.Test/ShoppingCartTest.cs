@@ -12,7 +12,7 @@ namespace Dblp.Domain.Test
         {
             //Arrange
             var searchResult = new SearchResult("homepages/r/DawkinsRichard", "Richard Dawkins",0,
-                SearchResultSourceType.Person);
+                SearchResultSourceType.Person,"");
 
             var target = new ShoppingCart();
             //Act
@@ -29,7 +29,7 @@ namespace Dblp.Domain.Test
         {
             //Arrange
             var searchResult = new SearchResult("homepages/r/DawkinsRichard", "Richard Dawkins",0,
-                SearchResultSourceType.Person);
+                SearchResultSourceType.Person, "");
 
             var target = new ShoppingCart();
             //Act
@@ -47,7 +47,7 @@ namespace Dblp.Domain.Test
         {
             //Arrange
             var searchResult = new SearchResult("homepages/r/DawkinsRichard", "Richard Dawkins",0,
-                SearchResultSourceType.Person);
+                SearchResultSourceType.Person, "");
 
             var target = new ShoppingCart();
             //Act
@@ -65,7 +65,7 @@ namespace Dblp.Domain.Test
         {
             //Arrange
             var searchResult = new SearchResult("homepages/r/DawkinsRichard", "Richard Dawkins",0,
-                SearchResultSourceType.Person);
+                SearchResultSourceType.Person, "");
 
             var target = new ShoppingCart();
             //Act
@@ -82,7 +82,7 @@ namespace Dblp.Domain.Test
         {
             //Arrange
             var searchResult = new SearchResult("homepages/r/DawkinsRichard", "Richard Dawkins",0,
-                SearchResultSourceType.Person);
+                SearchResultSourceType.Person, "");
 
             var target = new ShoppingCart();
             //Act
