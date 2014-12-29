@@ -159,6 +159,8 @@
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\knockout-3.2.0.debug.js" />
+    <Content Include="Scripts\knockout-3.2.0.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\site.js" />
@@ -177,8 +179,9 @@
     <Compile Include="App_Start\TypeaheadBundleConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AboutController.cs" />
-    <Compile Include="Controllers\QueryController.cs" />
-    <Compile Include="Controllers\PrefetchController.cs" />
+    <Compile Include="Controllers\api\ConferenceController.cs" />
+    <Compile Include="Controllers\api\QueryController.cs" />
+    <Compile Include="Controllers\api\PrefetchController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Models\CartIndexViewModel.cs" />
     <Compile Include="Models\StatusViewModel.cs" />
