@@ -2,7 +2,7 @@
 using System.Linq;
 using Dblp.Domain.Abstract;
 using Dblp.Domain.Entities;
-using Dblp.WebUi.Controllers;
+using Dblp.WebUi.Controllers.api;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -31,12 +31,12 @@ namespace Dblp.WebUi.Tests.Controller.WebApi2
         {
             //Arrange
             var mockSearchResults = new List<SearchResult>();
-            mockSearchResults.Add(new SearchResult("1","Eine Person",0,SearchResultSourceType.Person));
+            mockSearchResults.Add(new SearchResult("1", "Eine Person", 0, SearchResultSourceType.Person, ""));
             var mockRepo = new Mock<IDblpRepository>();
             mockRepo.Setup(t => t.SearchResults).Returns(mockSearchResults);
             //Act
             var target = new PrefetchController(mockRepo.Object);
-            var actual = target.GetSearchResults("person");
+            var actual = target.GetPeople();
             //Assert
             Assert.IsNotNull(actual);
             Assert.AreEqual(1,actual.Count());
@@ -47,12 +47,12 @@ namespace Dblp.WebUi.Tests.Controller.WebApi2
         {
             //Arrange
             var mockSearchResults = new List<SearchResult>();
-            mockSearchResults.Add(new SearchResult("2", "Ein Paper", 0, SearchResultSourceType.Paper));
+            mockSearchResults.Add(new SearchResult("2", "Ein Paper", 0, SearchResultSourceType.Paper, ""));
             var mockRepo = new Mock<IDblpRepository>();
             mockRepo.Setup(t => t.SearchResults).Returns(mockSearchResults);
             //Act
             var target = new PrefetchController(mockRepo.Object);
-            var actual = target.GetSearchResults("Hallo");
+            var actual = target.GetSearchResults();
             //Assert
             Assert.IsNotNull(actual);
             Assert.AreEqual(1, actual.Count());
@@ -68,7 +68,7 @@ namespace Dblp.WebUi.Tests.Controller.WebApi2
             mockRepo.Setup(t => t.SearchResults).Returns(mockSearchResults);
             //Act
             var target = new PrefetchController(mockRepo.Object);
-            var actual = target.GetSearchResults("person");
+            var actual = target.GetSearchResults();
             //Assert
             Assert.IsNotNull(actual);
             Assert.AreEqual(0, actual.Count());
