@@ -4,7 +4,7 @@ using System.Web.Http;
 using Dblp.Domain.Abstract;
 using Dblp.Domain.Entities;
 
-namespace Dblp.WebUi.Controllers
+namespace Dblp.WebUi.Controllers.api
 {
     public class QueryController : ApiController
     {
