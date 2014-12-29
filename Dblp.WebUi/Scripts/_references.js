@@ -7,3 +7,4 @@
 /// <reference path="typeahead.bundle.js" />
 /// <reference path="bloodhound.js" />
 /// <reference path="site.js" />
+/// <reference path="knockout-3.2.0.js" />
