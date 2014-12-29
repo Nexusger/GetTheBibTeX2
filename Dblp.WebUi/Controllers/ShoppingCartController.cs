@@ -17,6 +17,31 @@ namespace Dblp.WebUi.Controllers
             _bibTeXContentProvider = bibTeXContentProvider;
         }
 
+        public void AddKey(string dblpKey)
+        {
+
+
+
+            //var searchResult = _repo.Conferences.FirstOrDefault(sr => sr.Key == dblpKey);
+            //if (searchResult != null)
+            //{
+            //    searchResult = _repo.Conferences.Where(t=>t.SubConferences.Where(c=>c.PublicationKeys==dblpKey).Any())
+            //}
+            //if (searchResult != null)
+            //{
+                GetCart().AddItem(new SearchResult(dblpKey,"",0,SearchResultSourceType.Conference, ""));
+            //}
+        }
+
+        public void DeleteKey(string dblpKey)
+        {
+                GetCart().RemoveItem(new SearchResult(dblpKey, "", 0, SearchResultSourceType.Conference, ""));
+            //var searchResult = _repo.Conferences.FirstOrDefault(sr => sr.Key == dblpKey);
+            //if (searchResult != null)
+            //{
+            //}
+        }
+
         [HttpPost]
         public RedirectToRouteResult AddItem(string dblpKey, string returnUrl)
         {
