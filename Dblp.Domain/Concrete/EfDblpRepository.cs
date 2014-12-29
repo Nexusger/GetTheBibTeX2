@@ -17,8 +17,12 @@ namespace Dblp.Domain.Concrete
             get { return _context.Persons; }
             
         }
-        public IEnumerable<Publication> Publications { get; private set; }
         public IEnumerable<Proceeding> Proceedings { get; private set; }
         public IEnumerable<SearchResult> SearchResults { get; private set; }
+        public IEnumerable<ConferenceStructure> Conferences { get; private set; }
+        public string GetTitleToKey(string key)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

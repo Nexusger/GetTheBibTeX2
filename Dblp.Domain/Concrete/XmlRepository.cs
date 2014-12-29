@@ -4,19 +4,25 @@ using System.Linq;
 using System.Xml.Linq;
 using Dblp.Domain.Abstract;
 using Dblp.Domain.Entities;
+using Newtonsoft.Json;
 
 namespace Dblp.Domain.Concrete
 {
     public class XmlRepository : IDblpRepository
     {
-        private XElement _repo;
+        private  XElement _repo;
         private IEnumerable<Person> _personRepo;
         private IEnumerable<Proceeding> _proceedingRepo;
         private List<SearchResult> _searchResultRepo;
+        private  List<ConferenceStructure> _structureRepo;
+        //private Dictionary<string, string> _smallSearchResults;
         public XmlRepository()
         {
             _repo = XElement.Load(new StreamReader(@"D:\dblp\dblp-min.xml"));
+            _structureRepo = JsonConvert.DeserializeObject<List<ConferenceStructure>>(File.ReadAllText(@"D:\dblp\Structure.json"));
             _searchResultRepo = new List<SearchResult>();
+            
+
             //foreach (var person in People)
             //{
             //    foreach (var name in person.Names)
@@ -28,22 +34,23 @@ namespace Dblp.Domain.Concrete
             {
                 foreach (var name in proceeding.Editors)
                 {
-                    _searchResultRepo.Add(new SearchResult(proceeding.Key, name, 0, SearchResultSourceType.Paper,"Editor von "+proceeding.Title));
+                    _searchResultRepo.Add(new SearchResult(proceeding.Key, name, 0, SearchResultSourceType.Paper, "Editor von " + proceeding.Title));
                 }
                 foreach (var name in proceeding.Authors)
                 {
-                    _searchResultRepo.Add(new SearchResult(proceeding.Key, name, 0, SearchResultSourceType.Paper, "Autor von "+proceeding.Title));
+                    _searchResultRepo.Add(new SearchResult(proceeding.Key, name, 0, SearchResultSourceType.Paper, "Autor von " + proceeding.Title));
                 }
                 if (string.IsNullOrEmpty(proceeding.Series))
                 {
                     _searchResultRepo.Add(new SearchResult(proceeding.Key, proceeding.Series, 0,
-                        SearchResultSourceType.Paper, "Serie von "));}
+                        SearchResultSourceType.Paper, "Serie von "));
+                }
                 if (string.IsNullOrEmpty(proceeding.BookTitle))
                 {
                     _searchResultRepo.Add(new SearchResult(proceeding.Key, proceeding.BookTitle, 0,
                         SearchResultSourceType.Paper, "Buchtitel von "));
                 }
-                if (string.IsNullOrEmpty(proceeding.Title)) 
+                if (string.IsNullOrEmpty(proceeding.Title))
                 {
                     _searchResultRepo.Add(new SearchResult(proceeding.Key, proceeding.Title, 0,
                         SearchResultSourceType.Paper, ""));
@@ -67,7 +74,7 @@ namespace Dblp.Domain.Concrete
                 return _personRepo;
             }
         }
-        public IEnumerable<Publication> Publications { get; private set; }
+        // public IEnumerable<Publication> Publications { get; private set; }
         public IEnumerable<Proceeding> Proceedings
         {
             get
@@ -91,6 +98,16 @@ namespace Dblp.Domain.Concrete
             {
                 return _searchResultRepo;
             }
+        }
+
+        public IEnumerable<ConferenceStructure> Conferences
+        {
+            get
+            {
+                return _structureRepo;
+
+            }
+
         }
     }
 }
