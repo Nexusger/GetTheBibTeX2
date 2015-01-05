@@ -185,6 +185,7 @@
     <Compile Include="Controllers\api\PrefetchController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Models\CartIndexViewModel.cs" />
+    <Compile Include="Models\StatusListElement.cs" />
     <Compile Include="Models\StatusViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StatusController.cs" />

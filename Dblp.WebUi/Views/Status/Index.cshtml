@@ -3,24 +3,13 @@
 @{
     ViewBag.Title = "Status";
 }
-<div class="container">
-    <h2>Status</h2>
-    <div class="well">
-        <table>
-            <thead>
-                <tr>
-                    <td>Last Updated</td>
-                    <td>Anzahl Autoren</td>
-                    <td>Anzahl Konferenzen</td>
-                    <td>Anzahl Publikationen</td>
-                </tr>
-            </thead>
-            <tr>
-                <td>@Model.LastUpdated</td>
-                <td>@Model.NumberOfAuthors</td>
-                <td>@Model.NumberOfConferences Noch nicht eingetragen!</td>
-                <td>@Model.NumberOfPublications</td>
-            </tr>
-        </table>
-    </div>
+<h2>Status</h2>
+<div class="well">
+    <ul class="list-group">
+        @foreach (var element in @Model.Elements)
+        {
+            <li alt="@element.HoverText" class="list-group-item @(@element.SpecialMarker ? "list-group-item-danger":"")"><strong>@element.DisplayText: </strong><span class="badge">@element.Value</span></li>
+        }
+    </ul>
+<span class="text-muted">Last updated: @Model.LastUpdated</span>
 </div>
