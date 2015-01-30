@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dblp.ExtractBht", "Dblp.Ext
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dblp.Domain", "Dblp.Domain\Dblp.Domain.csproj", "{2F98EF3F-399C-4C22-9A91-88425093BAC2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dblp.Helper", "Dblp.Helper\Dblp.Helper.csproj", "{FD29D050-9450-4F2D-BDAD-9D3962876669}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dblp.DataExtraction.Start", "Start\Dblp.DataExtraction.Start.csproj", "{E1B5FB75-E553-479F-AE7C-75FF6D71B81D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,8 +31,19 @@ Global
 		{2F98EF3F-399C-4C22-9A91-88425093BAC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F98EF3F-399C-4C22-9A91-88425093BAC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F98EF3F-399C-4C22-9A91-88425093BAC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD29D050-9450-4F2D-BDAD-9D3962876669}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD29D050-9450-4F2D-BDAD-9D3962876669}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD29D050-9450-4F2D-BDAD-9D3962876669}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD29D050-9450-4F2D-BDAD-9D3962876669}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1B5FB75-E553-479F-AE7C-75FF6D71B81D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1B5FB75-E553-479F-AE7C-75FF6D71B81D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1B5FB75-E553-479F-AE7C-75FF6D71B81D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1B5FB75-E553-479F-AE7C-75FF6D71B81D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal
