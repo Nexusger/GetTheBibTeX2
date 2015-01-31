@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dblp.Domain", "Dblp.Domain\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dblp.Helper", "Dblp.Helper\Dblp.Helper.csproj", "{FD29D050-9450-4F2D-BDAD-9D3962876669}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dblp.DataExtraction.Start", "Start\Dblp.DataExtraction.Start.csproj", "{E1B5FB75-E553-479F-AE7C-75FF6D71B81D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dblp.DataExtraction.Start", "Dblp.DataExtraction.Start\Dblp.DataExtraction.Start.csproj", "{E1B5FB75-E553-479F-AE7C-75FF6D71B81D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
