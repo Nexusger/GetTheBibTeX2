@@ -14,7 +14,7 @@ namespace Dblp.ExtractBht.Saver
         {
             _fileName = fileName;
         }
-        public bool SaveConference(IEnumerable<Conference> conferences)
+        public bool SaveConferences(IEnumerable<Conference> conferences)
         {
 
             try

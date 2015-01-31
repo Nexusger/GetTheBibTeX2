@@ -7,7 +7,7 @@ using Dblp.ExtractBht.Interface;
 
 namespace Dblp.ExtractBht.Saver
 {
-    public class EntityFrameWorkSaver:IConferenceStructurSaver
+    public class EntityFrameWorkSaver : IConferenceStructurSaver
     {
 
         private readonly long _batchSize;
@@ -16,22 +16,27 @@ namespace Dblp.ExtractBht.Saver
         {
             _batchSize = batchSize;
         }
-        public bool SaveConference(IEnumerable<Conference> conferences)
+        public bool SaveConferences(IEnumerable<Conference> conferences)
         {
             var maxAmount = conferences.Count();
             var i = 0;
-            using (var db = new EfDbContext())
+            var db = new EfDbContext();
+
+            foreach (var conference in conferences)
             {
                 db.Configuration.AutoDetectChangesEnabled = false;
-                foreach (var conference in conferences)
+                db.Configuration.ValidateOnSaveEnabled = false;
+                db.Conferences.Add(conference);
+                Trace.TraceInformation("Prozent eingefügt: {0}", ((float)100 / (float)maxAmount) * (float)i);
+                i++;
+                if (i % _batchSize == 0)
                 {
-                    db.Conferences.Add(conference);
-                    Trace.TraceInformation("Prozent eingefügt: {0}", ((float) 100/(float) maxAmount)*(float) i);
-                    i++;
-                    if (i % _batchSize == 0)
-                        db.SaveChanges();
+                    db.SaveChanges();
+                    db.Dispose();
+                    db = new EfDbContext();
                 }
             }
+            db.Dispose();
             return true;
         }
     }

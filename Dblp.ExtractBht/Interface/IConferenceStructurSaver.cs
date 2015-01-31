@@ -5,6 +5,6 @@ namespace Dblp.ExtractBht.Interface
 {
     public interface IConferenceStructurSaver
     {
-        bool SaveConference(IEnumerable<Conference> conferences);
+        bool SaveConferences(IEnumerable<Conference> conferences);
     }
 }
