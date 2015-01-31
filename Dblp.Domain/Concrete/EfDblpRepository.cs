@@ -12,14 +12,10 @@ namespace Dblp.Domain.Concrete
     {
         private EfDbContext _context = new EfDbContext();
 
-        public IEnumerable<Person> People
-        {
-            get { return _context.Persons; }
-            
-        }
+        public IEnumerable<Person> People { get; private set; }
         public IEnumerable<Proceeding> Proceedings { get; private set; }
         public IEnumerable<SearchResult> SearchResults { get; private set; }
-        public IEnumerable<ConferenceStructure> Conferences { get; private set; }
+        public IEnumerable<Conference> Conferences { get; private set; }
         public string GetTitleToKey(string key)
         {
             throw new NotImplementedException();

@@ -11,7 +11,7 @@ namespace Dblp.Domain.Abstract
         IEnumerable<Proceeding> Proceedings { get; }
         IEnumerable<SearchResult> SearchResults { get; }
 
-        IEnumerable<ConferenceStructure> Conferences { get; }
+        IEnumerable<Conference> Conferences { get; }
 
     }
 

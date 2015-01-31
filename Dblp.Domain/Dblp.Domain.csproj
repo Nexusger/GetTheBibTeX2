@@ -87,14 +87,17 @@
     <Compile Include="Concrete\EfDbContext.cs" />
     <Compile Include="Concrete\EfDblpRepository.cs" />
     <Compile Include="Concrete\XmlRepository.cs" />
+    <Compile Include="Entities\Author.cs" />
+    <Compile Include="Entities\AuthorList.cs" />
+    <Compile Include="Entities\EventList.cs" />
     <Compile Include="Entities\Publication.cs" />
-    <Compile Include="Entities\ConferenceStructure.cs" />
+    <Compile Include="Entities\Conference.cs" />
     <Compile Include="Entities\Proceeding.cs" />
     <Compile Include="Entities\Person.cs" />
     <Compile Include="Entities\SearchResultSourceType.cs" />
     <Compile Include="Entities\SearchResult.cs" />
     <Compile Include="Entities\ShoppingCart.cs" />
-    <Compile Include="Entities\SubConference.cs" />
+    <Compile Include="Entities\ConferenceEvent.cs" />
     <Compile Include="Helper\EntityHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

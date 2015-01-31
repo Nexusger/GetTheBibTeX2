@@ -6,10 +6,13 @@ using System.Runtime.Serialization;
 namespace Dblp.Domain.Entities
 {
     [DataContract]
-    public class SubConference
+    public class ConferenceEvent
     {
         [Key]
-        [DataMember]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [DataMember(Name="EventKey")]
         public string Key { get; set; }
         
         [DataMember]
@@ -17,6 +20,9 @@ namespace Dblp.Domain.Entities
         
         [DataMember]
         public List<Publication> Publications { get; set; }
+
+        public virtual Conference Confercence { get; set; }
+
         public override string ToString()
         {
             return Key + " " + Title;
