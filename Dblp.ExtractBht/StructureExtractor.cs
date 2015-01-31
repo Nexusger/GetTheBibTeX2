@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using Dblp.Domain.Entities;
@@ -11,24 +12,28 @@ namespace Dblp.ExtractBht
 {
     public class StructureExtractor
     {
-        public List<Conference> Structures { get; private set; }
+        public HashSet<Conference> Structures { get; private set; }
     
         const string IndexBht = @"\index.bht";
         public StructureExtractor()
         {
-            Structures = new List<Conference>();
+            Structures = new HashSet<Conference>();
         }
 
-        public void StartScan(string path)
+        public HashSet<Conference> StartScan(string path)
         {
-            foreach (var file in Directory.GetDirectories(path))
+            foreach(var file in Directory.GetDirectories(path))
             {
                 if (Directory.Exists(file))
                 {
                     ProcessDirectory(file);
                 }
             }
+            return Structures;
         }
+
+
+
         private void ProcessDirectory(string path)
         {
             
