@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
+using System.Web.Helpers;
 using System.Xml.Linq;
 using Dblp.Domain.Abstract;
 using Dblp.Domain.Entities;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Dblp.Domain.Concrete
 {
@@ -14,46 +18,28 @@ namespace Dblp.Domain.Concrete
         private IEnumerable<Person> _personRepo;
         private IEnumerable<Proceeding> _proceedingRepo;
         private List<SearchResult> _searchResultRepo;
-        private  List<ConferenceStructure> _structureRepo;
-        //private Dictionary<string, string> _smallSearchResults;
+        private  List<Conference> _structureRepo;
+        private List<KeyValuePair<string, string>> _smallSearchResults;
         public XmlRepository()
         {
             _repo = XElement.Load(new StreamReader(@"D:\dblp\dblp-min.xml"));
-            _structureRepo = JsonConvert.DeserializeObject<List<ConferenceStructure>>(File.ReadAllText(@"D:\dblp\Structure.json"));
+            _structureRepo = JsonConvert.DeserializeObject<List<Conference>>(File.ReadAllText(@"D:\dblp\Structure.json"));
             _searchResultRepo = new List<SearchResult>();
-            
-
-            //foreach (var person in People)
-            //{
-            //    foreach (var name in person.Names)
-            //    {
-            //        _searchResultRepo.Add(new SearchResult(person.Key, name, 0,SearchResultSourceType.Person,""));
-            //    }
-            //}
-            foreach (var proceeding in Proceedings)
+            _smallSearchResults = new List<KeyValuePair<string, string>>()
             {
-                foreach (var name in proceeding.Editors)
+                new KeyValuePair<string, string>("conf/LAK/index","Test Text")
+            };
+            foreach (var conference in _structureRepo)
+            {
+                _searchResultRepo.Add(new SearchResult(conference.Key, conference.ConferenceTitle, 0, SearchResultSourceType.Conference, ""));
+                foreach (var @event in conference.Events)
                 {
-                    _searchResultRepo.Add(new SearchResult(proceeding.Key, name, 0, SearchResultSourceType.Paper, "Editor von " + proceeding.Title));
-                }
-                foreach (var name in proceeding.Authors)
-                {
-                    _searchResultRepo.Add(new SearchResult(proceeding.Key, name, 0, SearchResultSourceType.Paper, "Autor von " + proceeding.Title));
-                }
-                if (string.IsNullOrEmpty(proceeding.Series))
-                {
-                    _searchResultRepo.Add(new SearchResult(proceeding.Key, proceeding.Series, 0,
-                        SearchResultSourceType.Paper, "Serie von "));
-                }
-                if (string.IsNullOrEmpty(proceeding.BookTitle))
-                {
-                    _searchResultRepo.Add(new SearchResult(proceeding.Key, proceeding.BookTitle, 0,
-                        SearchResultSourceType.Paper, "Buchtitel von "));
-                }
-                if (string.IsNullOrEmpty(proceeding.Title))
-                {
-                    _searchResultRepo.Add(new SearchResult(proceeding.Key, proceeding.Title, 0,
-                        SearchResultSourceType.Paper, ""));
+                    _searchResultRepo.Add(new SearchResult(@event.Key, @event.Title, 0, SearchResultSourceType.Conference, ""));
+                    if(@event.Publications!=null)
+                    foreach (var publication in @event.Publications)
+                    {
+                        _searchResultRepo.Add(new SearchResult(publication.Key,publication.Title,0,SearchResultSourceType.Paper, ""));
+                    }
                 }
             }
         }
@@ -100,12 +86,11 @@ namespace Dblp.Domain.Concrete
             }
         }
 
-        public IEnumerable<ConferenceStructure> Conferences
+        public IEnumerable<Conference> Conferences
         {
             get
             {
-                return _structureRepo;
-
+                return _structureRepo;//.Select(t=> { t.ConferenceTitle = _smallSearchResults.FirstOrDefault(k=>k.Key==t.Key).Value;return t;});
             }
 
         }
