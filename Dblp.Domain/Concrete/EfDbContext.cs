@@ -8,7 +8,9 @@ namespace Dblp.Domain.Concrete
         public EfDbContext():base("name=EfDbContext")
         {
         }
-        public DbSet<Person> Persons { get; set; }
+        
+        public DbSet<Conference> Conferences { get; set; }
+        public DbSet<Publication> Publications { get; set; }
 
     }
 }
