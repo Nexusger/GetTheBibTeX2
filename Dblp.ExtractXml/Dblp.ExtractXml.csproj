@@ -5,11 +5,11 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C6679176-16B9-4A77-8FB7-A4FDE6369547}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Dblp.ExtractXml</RootNamespace>
     <AssemblyName>Dblp.ExtractXml</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -26,6 +26,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,7 +37,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -47,19 +47,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="StackExchange.Redis">
-      <HintPath>..\packages\StackExchange.Redis.1.0.371\lib\net45\StackExchange.Redis.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -71,27 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IDblpRepository.cs" />
-    <Compile Include="Abstract\ISave.cs" />
-    <Compile Include="Concrete\RedisRepository.cs" />
-    <Compile Include="Concrete\SqlServerSaver.cs" />
-    <Compile Include="Concrete\DblpContext.cs" />
-    <Compile Include="Concrete\EfDblpRepository.cs" />
-    <Compile Include="Concrete\RedisSaver.cs" />
-    <Compile Include="Entities\Book.cs" />
-    <Compile Include="Entities\Publication.cs" />
-    <Compile Include="Entities\Inproceeding.cs" />
-    <Compile Include="Entities\Name.cs" />
-    <Compile Include="Entities\Note.cs" />
-    <Compile Include="Entities\Person.cs" />
-    <Compile Include="Entities\Proceeding.cs" />
-    <Compile Include="Abstract\IEntry.cs" />
-    <Compile Include="Entities\PublicationTypeEnum.cs" />
-    <Compile Include="Factories\InProceedingsFactory.cs" />
-    <Compile Include="Factories\BookFactory.cs" />
-    <Compile Include="Factories\ProceedingFactory.cs" />
-    <Compile Include="Program2.cs" />
-    <Compile Include="Program1.cs" />
+    <Compile Include="KeyTitleLookUp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -114,6 +88,16 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dblp.Domain\Dblp.Domain.csproj">
+      <Project>{2f98ef3f-399c-4c22-9a91-88425093bac2}</Project>
+      <Name>Dblp.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dblp.Helper\Dblp.Helper.csproj">
+      <Project>{fd29d050-9450-4f2d-bdad-9d3962876669}</Project>
+      <Name>Dblp.Helper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
