@@ -156,6 +156,7 @@
     <Content Include="Scripts\bloodhound.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\1und1 - dblp.nexusger.net.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
@@ -193,7 +194,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\MenuExtension.cs" />
-    <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Models\SearchResultViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -220,8 +220,12 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Dblp.Domain.Interfaces\Dblp.Domain.Interfaces.csproj">
+      <Project>{58fd2f03-da94-4b03-b364-8954653719a0}</Project>
+      <Name>Dblp.Domain.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Dblp.Domain\Dblp.Domain.csproj">
-      <Project>{2f98ef3f-399c-4c22-9a91-88425093bac2}</Project>
+      <Project>{2F98EF3F-399C-4C22-9A91-88425093BAC2}</Project>
       <Name>Dblp.Domain</Name>
     </ProjectReference>
   </ItemGroup>

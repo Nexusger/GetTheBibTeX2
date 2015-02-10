@@ -45,6 +45,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -80,26 +83,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\BibTeXContentOptions.cs" />
-    <Compile Include="Abstract\IBibTeXContentProvider.cs" />
-    <Compile Include="Abstract\IDblpRepository.cs" />
-    <Compile Include="Concrete\ConstantBibTexContentProvider.cs" />
-    <Compile Include="Concrete\EfDbContext.cs" />
-    <Compile Include="Concrete\EfDblpRepository.cs" />
-    <Compile Include="Concrete\XmlRepository.cs" />
-    <Compile Include="Entities\Author.cs" />
-    <Compile Include="Entities\AuthorList.cs" />
-    <Compile Include="Entities\EventList.cs" />
-    <Compile Include="Entities\Publication.cs" />
-    <Compile Include="Entities\Conference.cs" />
-    <Compile Include="Entities\Proceeding.cs" />
-    <Compile Include="Entities\Person.cs" />
-    <Compile Include="Entities\SearchResultSourceType.cs" />
-    <Compile Include="Entities\SearchResult.cs" />
-    <Compile Include="Entities\ShoppingCart.cs" />
-    <Compile Include="Entities\ConferenceEvent.cs" />
-    <Compile Include="Helper\EntityHelper.cs" />
+    <Compile Include="AuthorsHelper.cs" />
+    <Compile Include="Concrete\EfRepository.cs" />
+    <Compile Include="Concrete\InMemoryRepository.cs" />
+    <Compile Include="Concrete\StatusRepository.cs" />
+    <Compile Include="ConferenceHelper.cs" />
+    <Compile Include="ConstantBibTexContentProvider.cs" />
+    <Compile Include="EventHelper.cs" />
+    <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PublicationsHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -107,6 +100,21 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dblp.Data.Interfaces\Dblp.Data.Interfaces.csproj">
+      <Project>{519DDFD5-B19E-45DF-B311-4CC130E9C2A9}</Project>
+      <Name>Dblp.Data.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dblp.Data\Dblp.Data.csproj">
+      <Project>{12292979-4ad2-4f73-a0ce-346d228e6f6d}</Project>
+      <Name>Dblp.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dblp.Domain.Interfaces\Dblp.Domain.Interfaces.csproj">
+      <Project>{58FD2F03-DA94-4B03-B364-8954653719A0}</Project>
+      <Name>Dblp.Domain.Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

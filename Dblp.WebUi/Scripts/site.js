@@ -1,9 +1,9 @@
 ﻿var topSearchResults = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.obj.whitespace("Key"),
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace("DisplayText"),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     limit: 10,
     prefetch: '/api/Prefetch/GetConferences',
-   // remote: '/api/Query/GetResults/query=%QUERY'
+    remote: '/api/Query/GetConferences/%QUERY'
 });
 topSearchResults.initialize();
 //var topPersonSearchResults = new Bloodhound({
@@ -43,15 +43,15 @@ $(document).ready(function () {
     },
     {
         name: 'topSearchResults',
-        displayKey: 'Key',
+        displayKey: 'DisplayText',
         // `ttAdapter` wraps the suggestion engine in an adapter that
         // is compatible with the typeahead jQuery plugin
         source: topSearchResults.ttAdapter(),
         templates: {
-            header: '<h3>Publikationen</h3>',
+            header: '<h3>Konferenzen</h3>',
             empty: [
                 '<div class="empty-message">',
-                'Es konnten keine Publikationen gefunden werden',
+                'Es konnten keine Konferenzen gefunden werden',
                 '</div>'
             ].join('\n'),
 }

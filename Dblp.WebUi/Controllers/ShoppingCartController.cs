@@ -1,7 +1,8 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
-using Dblp.Domain.Abstract;
-using Dblp.Domain.Entities;
+using Dblp.Domain;
+using Dblp.Domain.Interfaces;
+using Dblp.Domain.Interfaces.Entities;
 using Dblp.WebUi.Models;
 
 namespace Dblp.WebUi.Controllers
@@ -20,45 +21,42 @@ namespace Dblp.WebUi.Controllers
         public void AddKey(string dblpKey)
         {
 
-
-
-            //var searchResult = _repo.Conferences.FirstOrDefault(sr => sr.Key == dblpKey);
-            //if (searchResult != null)
-            //{
-            //    searchResult = _repo.Conferences.Where(t=>t.SubConferences.Where(c=>c.PublicationKeys==dblpKey).Any())
-            //}
-            //if (searchResult != null)
-            //{
-                GetCart().AddItem(new SearchResult(dblpKey,"",0,SearchResultSourceType.Conference, ""));
-            //}
+            if (!_repo.PublicationExists(dblpKey))
+                return;
+            var searchResult = _repo.GetPublicationByKeyAsSearchResult(dblpKey);
+            if (searchResult != null)
+                GetCart().AddItem(searchResult);
         }
 
         public void DeleteKey(string dblpKey)
         {
-                GetCart().RemoveItem(new SearchResult(dblpKey, "", 0, SearchResultSourceType.Conference, ""));
-            //var searchResult = _repo.Conferences.FirstOrDefault(sr => sr.Key == dblpKey);
-            //if (searchResult != null)
-            //{
-            //}
+            GetCart().RemoveItem(new SearchResult(dblpKey, "", 0, SearchResultSourceType.Conference, ""));
         }
 
         [HttpPost]
         public RedirectToRouteResult AddItem(string dblpKey, string returnUrl)
         {
-            var searchResult = _repo.SearchResults.FirstOrDefault(sr => sr.Key == dblpKey);
-            if (searchResult != null)
+            if (!_repo.PublicationExists(dblpKey))
             {
-                GetCart().AddItem(searchResult);
+
+                var searchResult = _repo.GetPublicationByKeyAsSearchResult(dblpKey);
+            if (searchResult != null)
+                GetCart().AddItem(searchResult); 
             }
             return RedirectToAction("Index", new { returnUrl });
         }
 
         public RedirectToRouteResult RemoveFromCart(string dblpKey, string returnUrl)
         {
-            var searchResult = _repo.SearchResults.FirstOrDefault(sr => sr.Key == dblpKey);
+
+
+            if (!_repo.PublicationExists(dblpKey))
+            {  
+            var searchResult = _repo.GetConferenceByKey(dblpKey).ToSearchResult();
             if (searchResult != null)
-            {
                 GetCart().RemoveItem(searchResult);
+
+
             }
             return RedirectToAction("Index", new { returnUrl });
         }
@@ -78,7 +76,7 @@ namespace Dblp.WebUi.Controllers
         {
             var cartIndexViewModel = new CartIndexViewModel
             {
-                Cart = GetCart(), 
+                Cart = GetCart(),
                 ReturnUrl = returnUrl
             };
             return View(cartIndexViewModel);

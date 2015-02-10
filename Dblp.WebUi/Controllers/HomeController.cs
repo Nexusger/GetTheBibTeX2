@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
-using Dblp.Domain.Entities;
-using Dblp.WebUi.Models;
+﻿using System.Web.Mvc;
 
 namespace Dblp.WebUi.Controllers
 {

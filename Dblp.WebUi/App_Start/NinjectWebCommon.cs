@@ -1,7 +1,7 @@
 using System;
 using System.Web;
+using Dblp.Domain.Infrastructure;
 using Dblp.WebUi;
-using Dblp.WebUi.Infrastructure;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject;
 using Ninject.Web.Common;

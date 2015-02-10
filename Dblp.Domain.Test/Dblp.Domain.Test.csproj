@@ -58,9 +58,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Dblp.Domain\Dblp.Domain.csproj">
-      <Project>{2f98ef3f-399c-4c22-9a91-88425093bac2}</Project>
-      <Name>Dblp.Domain</Name>
+    <ProjectReference Include="..\Dblp.Domain.Interfaces\Dblp.Domain.Interfaces.csproj">
+      <Project>{58fd2f03-da94-4b03-b364-8954653719a0}</Project>
+      <Name>Dblp.Domain.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

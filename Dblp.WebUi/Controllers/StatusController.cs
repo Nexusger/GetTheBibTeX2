@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using Dblp.Domain.Abstract;
+using Dblp.Domain.Interfaces;
 using Dblp.WebUi.Models;
 
 namespace Dblp.WebUi.Controllers
@@ -10,27 +8,27 @@ namespace Dblp.WebUi.Controllers
     public class StatusController : Controller
     {
 
-        private IDblpRepository _repo;
+        private IStatusRepository _repo;
 
-        public StatusController(IDblpRepository repo)
+        public StatusController(IStatusRepository repo)
         {
             _repo = repo;
         }
         // GET: Status
         public ActionResult Index()
         {
-            var lastUpdated = DateTime.UtcNow;
+            var lastUpdated = _repo.LastUpdated();
 
             var statusElements = new List<StatusListElement>();
-            var numberOfAuthors = _repo.People.Count();
-            statusElements.Add( new StatusListElement()
+            var numberOfAuthors = _repo.NumberOfAuthors();
+            statusElements.Add(new StatusListElement()
             {
                 DisplayText = "Anzahl Autoren",
                 HoverText = "Mockdaten",
                 SpecialMarker = true,
                 Value = numberOfAuthors
             });
-            var numberOfConferences = _repo.Conferences.Count();
+            var numberOfConferences = _repo.NumberOfConferences();
             statusElements.Add(new StatusListElement()
             {
                 DisplayText = "Anzahl Konferenzen",
@@ -38,33 +36,25 @@ namespace Dblp.WebUi.Controllers
                 SpecialMarker = false,
                 Value = numberOfConferences
             });
-            var numberOfEventsInConferences = _repo.Conferences.Sum(t=>t.SubConferences.Count);
+            var numberOfConferenceEvents = _repo.NumberOfConferenceEvents();
             statusElements.Add(new StatusListElement()
             {
                 DisplayText = "Anzahl Events",
                 HoverText = "e.g. Proceedings of the 2nd International Workshop on Teaching Analytics, Leuven, Belgium, April 8, 2013 ",
                 SpecialMarker = false,
-                Value = numberOfEventsInConferences
+                Value = numberOfConferenceEvents
             });
-            var numberOfLinkedPublications = _repo.Conferences.Sum(t=>t.SubConferences.Where(k=>k.Publications!=null).Sum(b=>b.Publications.Count()));
-            statusElements.Add(new StatusListElement()
-            {
-                DisplayText = "Anzahl verknüpfter Publikationen",
-                HoverText = "e.g. Exploiting Popularity and Similarity for Link Recommendation in Twitter Networks",
-                SpecialMarker = false,
-                Value = numberOfLinkedPublications
-            });
-            var numberOfPublications = _repo.Proceedings.Count();
+            var numberOfPublications = _repo.NumberOfPublications();
             statusElements.Add(new StatusListElement()
             {
                 DisplayText = "Anzahl Publikationen",
                 HoverText = "Mockdaten",
-                SpecialMarker = true,
+                SpecialMarker = false,
                 Value = numberOfPublications
             });
 
             var model = new StatusViewModel(lastUpdated, statusElements);
-            
+
             return View(model);
         }
     }

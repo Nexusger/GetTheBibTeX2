@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using Dblp.Domain.Abstract;
-using Dblp.Domain.Entities;
+using Dblp.Domain;
+using Dblp.Domain.Interfaces;
+using Dblp.Domain.Interfaces.Entities;
 
 namespace Dblp.WebUi.Controllers.api
 {
@@ -16,9 +17,16 @@ namespace Dblp.WebUi.Controllers.api
         }
 
         [HttpGet]
-        public IEnumerable<SearchResult> GetSearchResults(string query)
+        public IEnumerable<SearchResult> GetSearchResults(string key)
         {
-           return _repository.SearchResults.Where(sr => (sr.DisplayText!=null && sr.DisplayText.Contains(query))).Take(10);
+            return _repository.GetConferences(key, 10).Select(t=>t.ToSearchResult());
+        }
+
+        [HttpGet]
+        public IEnumerable<SearchResult> GetConferences(string key)
+        {
+            var searchResults = _repository.GetSearchResults(key, 10);
+            return searchResults;
         }
     }
 }

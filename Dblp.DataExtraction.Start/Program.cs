@@ -1,36 +1,21 @@
-﻿using System.Threading.Tasks;
-using Dblp.ExtractBht;
-using Dblp.ExtractXml;
+﻿using System.Configuration;
+using System.Data.Entity.Infrastructure.Design;
+using System.Net.Mime;
+using Dblp.Data;
+using Dblp.Data.Saver;
 
-namespace Start
+namespace Dblp.DataExtraction.Start
 {
     public class Program
     {
-        public const string Startpath = @"D:\dblp\bht\db\conf\";
+        public const string PathToDblpXml = @"D:\dblp\dblp.xml";
+        public const string PathToBhtFolder = @"D:\dblp\bht\db\conf\";
         static void Main(string[] args)
         {
-            var extractor = new StructureExtractor();
-            extractor.StartScan(Startpath);
-
-            var keyTitleLookUp = new KeyTitleLookUp(@"D:\dblp\dblp.xml");
-
-            Parallel.ForEach(extractor.Structures, conference =>
-            {
-                foreach (var @event in conference.Events)
-                {
-                    if(@event.Publications!=null)
-                    foreach (var publication in @event.Publications)
-                    {
-                        if (publication != null)
-                        {
-                            if (keyTitleLookUp.SmallSearchResults.ContainsKey(publication.Key))
-                            {
-                                publication.Title = keyTitleLookUp.SmallSearchResults[publication.Key];
-                            }
-                        }
-                    }
-                }
-            });
+            var repo = new InMemoryDataStore(PathToDblpXml, PathToBhtFolder);
+            var saver = new EntityFrameWorkSaver(Settings.Default.BatchSize);
+            saver.SaveConferences(repo.Conferences);
+            
         }
     }
 }

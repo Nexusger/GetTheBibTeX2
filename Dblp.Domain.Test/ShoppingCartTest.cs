@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Dblp.Domain.Entities;
+using Dblp.Domain.Interfaces.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Dblp.Domain.Test

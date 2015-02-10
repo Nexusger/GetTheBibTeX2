@@ -1,4 +1,4 @@
-﻿using Dblp.Domain.Entities;
+﻿using Dblp.Domain.Interfaces.Entities;
 
 namespace Dblp.WebUi.Models
 {

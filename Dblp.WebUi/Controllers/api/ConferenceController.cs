@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 using System.Web.Http;
-using Dblp.Domain.Abstract;
-using Dblp.Domain.Entities;
+using Dblp.Domain.Interfaces;
+using Dblp.Domain.Interfaces.Entities;
 
 namespace Dblp.WebUi.Controllers.api
 {
@@ -13,29 +13,22 @@ namespace Dblp.WebUi.Controllers.api
 
         public ConferenceController(IDblpRepository repo)
         {
+            Trace.TraceInformation("repo"+repo.ToString());
             _repo = repo;
         }
 
-        public IEnumerable<ConferenceStructure> GetConferences()
+        public IEnumerable<Conference> GetConferences()
         {
-            return _repo.Conferences.Take(15);
+            return _repo.GetConferences(15);
         }
 
-        public ConferenceStructure GetConference(string key)
+        public Conference GetConference(string key)
         {
-            var conference = _repo.Conferences.Where(c => (c.Key != null && c.Key.Contains(key))).FirstOrDefault();
-            //var conference = _repo.Conferences.Where(c => c.Key == key).FirstOrDefault();
-            if (conference != null)
-            {
-                return conference;
-            }
-            //Check sub conferences
-            conference = _repo.Conferences.Where(c => c.SubConferences.Where(t => t.Key == key).Any()).FirstOrDefault();
-            if (conference != null)
-            {
-                return conference;
-            }
+            if (key == null)
             return null;
+
+            var conference = _repo.GetConferenceByKey(key);
+            return conference ?? null;
         }
     }
 }

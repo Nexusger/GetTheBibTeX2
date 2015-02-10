@@ -90,6 +90,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Dblp.Domain.Interfaces\Dblp.Domain.Interfaces.csproj">
+      <Project>{58FD2F03-DA94-4B03-B364-8954653719A0}</Project>
+      <Name>Dblp.Domain.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Dblp.Domain\Dblp.Domain.csproj">
       <Project>{2f98ef3f-399c-4c22-9a91-88425093bac2}</Project>
       <Name>Dblp.Domain</Name>

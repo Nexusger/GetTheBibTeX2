@@ -22,7 +22,7 @@
                         <th>Key (für Debuggen)</th>
                     </tr>
                 </thead>
-                <tbody data-bind="foreach: model.SubConferences">
+                <tbody data-bind="foreach: model.Events">
                     <tr class="info">
                         <td><input type="checkbox" /></td>
                         <td data-bind="text: Title">Der Titel</td>
@@ -51,7 +51,7 @@
         var model = {
             ConferenceTitle: ko.observable(),
             Key: ko.observable(),
-            SubConferences: ko.observableArray(),
+            Events: ko.observableArray(),
         };
 
         function sendAjaxRequest(httpMethod, callback, url) {
@@ -64,14 +64,14 @@
                 model.ConferenceTitle(data.ConferenceTitle);
                 model.Key(data.Key);
 
-                model.SubConferences.removeAll();
-                for (var i = 0; i < data.SubConferences.length; i++) {
-                    //model.SubConferences.push({key:data.SubConferences[i],selected:true});
+                model.Events.removeAll();
+                for (var i = 0; i < data.Events.length; i++) {
+                    //model.Events.push({key:data.Events[i],selected:true});
                     var publicationsInSubConference = ko.observableArray();
-                    if (data.SubConferences[i].Publications != null) {
-                        for (var j = 0; j < data.SubConferences[i].Publications.length; j++) {
+                    if (data.Events[i].Publications != null) {
+                        for (var j = 0; j < data.Events[i].Publications.length; j++) {
 
-                            var currentPublication = data.SubConferences[i].Publications[j];
+                            var currentPublication = data.Events[i].Publications[j];
 
                             publicationsInSubConference.push(
                             {
@@ -81,11 +81,11 @@
                                 selected: ko.observable(false)
                             });
                         }
-                        model.SubConferences.push(
+                        model.Events.push(
                         {
-                            Key: data.SubConferences[i].Key,
+                            Key: data.Events[i].Key,
                             selected: ko.observable(false),
-                            Title: data.SubConferences[i].Title,
+                            Title: data.Events[i].Title,
                             Publications: publicationsInSubConference
                         });
                     }

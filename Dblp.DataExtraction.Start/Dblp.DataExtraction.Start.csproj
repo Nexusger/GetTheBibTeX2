@@ -52,23 +52,28 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Settings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Dblp.Domain\Dblp.Domain.csproj">
-      <Project>{2f98ef3f-399c-4c22-9a91-88425093bac2}</Project>
-      <Name>Dblp.Domain</Name>
+    <ProjectReference Include="..\Dblp.Data.Interfaces\Dblp.Data.Interfaces.csproj">
+      <Project>{519DDFD5-B19E-45DF-B311-4CC130E9C2A9}</Project>
+      <Name>Dblp.Data.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Dblp.ExtractBht\Dblp.ExtractBht.csproj">
-      <Project>{4e9fa386-7213-4b9a-b1c2-c83d2262bbb6}</Project>
-      <Name>Dblp.ExtractBht</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Dblp.ExtractXml\Dblp.ExtractXml.csproj">
-      <Project>{c6679176-16b9-4a77-8fb7-a4fde6369547}</Project>
-      <Name>Dblp.ExtractXml</Name>
+    <ProjectReference Include="..\Dblp.Data\Dblp.Data.csproj">
+      <Project>{12292979-4ad2-4f73-a0ce-346d228e6f6d}</Project>
+      <Name>Dblp.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Dblp.Helper\Dblp.Helper.csproj">
       <Project>{fd29d050-9450-4f2d-bdad-9d3962876669}</Project>
