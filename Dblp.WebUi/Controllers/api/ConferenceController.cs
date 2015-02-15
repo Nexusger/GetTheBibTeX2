@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Web.Http;
 using Dblp.Domain.Interfaces;
 using Dblp.Domain.Interfaces.Entities;
@@ -13,7 +12,6 @@ namespace Dblp.WebUi.Controllers.api
 
         public ConferenceController(IDblpRepository repo)
         {
-            Trace.TraceInformation("repo"+repo.ToString());
             _repo = repo;
         }
 
