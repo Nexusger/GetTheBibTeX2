@@ -1,10 +1,12 @@
-﻿using Dblp.Domain.Interfaces;
+﻿using System.Collections.Generic;
+using Dblp.Domain.Interfaces;
+using Dblp.Domain.Interfaces.Entities;
 
 namespace Dblp.Domain
 {
-    public class ConstantBibTexContentProvider:IBibTeXContentProvider
+    public class ConstantBibTexContentProvider : IBibTeXContentProvider
     {
-        public byte[] GetBibTexFileBytes(BibTeXContentOptions options)
+        public byte[] GetBibTexFileBytes(IEnumerable<SearchResult> searchResults, BibTeXContentOptions options)
         {
 
             var contentOfSingleBibTeXFile = @"@article{DBLP:journals/jsc/Fortenbacher87,

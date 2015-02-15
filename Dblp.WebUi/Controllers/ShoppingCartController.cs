@@ -84,7 +84,7 @@ namespace Dblp.WebUi.Controllers
 
         public FileResult Download()
         {
-            byte[] fileBytes = _bibTeXContentProvider.GetBibTexFileBytes(BibTeXContentOptions.None);
+            byte[] fileBytes = _bibTeXContentProvider.GetBibTexFileBytes(GetCart().SearchResults,BibTeXContentOptions.None);
             const string fileName = "myfile.bib";
             return File(fileBytes, "text/x-bibtex", fileName);
         }
