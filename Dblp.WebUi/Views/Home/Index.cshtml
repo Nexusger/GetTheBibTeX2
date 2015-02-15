@@ -30,13 +30,16 @@
                         <td data-bind="text: Key"></td>
                     </tr>
                     <!-- ko foreach: Publications -->
-                    <tr>
+                    <tr data-bind="visible: model.ShowAllPublications()">
                         <td><input type="checkbox" data-bind="click:toggleCheckbox, checked:selected" /></td>
                         <td></td>
                         <td colspan="2" data-bind="text: Title">Der Titel</td>
                         <td data-bind="text: Key"></td>
                     </tr>
                     <!-- /ko -->
+                    <tr data-bind="visible: !model.ShowAllPublications()">
+                        <td colspan="4">Die Konferenz hat weitere Elemente. <b data-bind="click: model.ShowAllPublicationsFor">Anzeigen?</b> </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -52,6 +55,10 @@
             ConferenceTitle: ko.observable(),
             Key: ko.observable(),
             Events: ko.observableArray(),
+            ShowAllPublications: ko.observable(),
+            ShowAllPublicationsFor : function(data, event) {
+                model.ShowAllPublications(true);
+            }
         };
 
         function sendAjaxRequest(httpMethod, callback, url) {
@@ -63,10 +70,10 @@
 
                 model.ConferenceTitle(data.ConferenceTitle);
                 model.Key(data.Key);
-
+                
+                model.ShowAllPublications(false);
                 model.Events.removeAll();
                 for (var i = 0; i < data.Events.length; i++) {
-                    //model.Events.push({key:data.Events[i],selected:true});
                     var publicationsInSubConference = ko.observableArray();
                     if (data.Events[i].Publications != null) {
                         for (var j = 0; j < data.Events[i].Publications.length; j++) {
@@ -122,6 +129,7 @@
             });
             return true;
         }
+
 
         //function removeItem(item) {
         //     sendAjaxRequest("DELETE", function() {
