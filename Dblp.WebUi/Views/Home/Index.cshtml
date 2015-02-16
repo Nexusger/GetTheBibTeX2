@@ -56,8 +56,9 @@
             Key: ko.observable(),
             Events: ko.observableArray(),
             ShowAllPublications: ko.observable(),
-            ShowAllPublicationsFor : function(data, event) {
+            ShowAllPublicationsFor: function (currentItem) {
                 model.ShowAllPublications(true);
+                return false;
             }
         };
 
@@ -129,7 +130,6 @@
             });
             return true;
         }
-
 
         //function removeItem(item) {
         //     sendAjaxRequest("DELETE", function() {
