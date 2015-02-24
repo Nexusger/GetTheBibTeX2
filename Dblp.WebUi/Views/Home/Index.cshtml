@@ -10,7 +10,7 @@
     @Html.InputWithGlyphicon()
     @Html.Hidden("dblpKey")
     <div id="summary" class="panel panel-primary">
-        <div class="panel-heading" data-bind="text: model.ConferenceTitle">Konferenz oder Person</div>
+        <div class="panel-heading">Konferenz: <!--ko text: model.ConferenceTitle--><!--/ko--></div>
         <div class="panel-body">
             <table class="table table-striped table-condensed">
                 <thead>
@@ -26,7 +26,7 @@
                     <tr class="info">
                         <td><input type="checkbox" /></td>
                         <td data-bind="text: Title">Der Titel</td>
-                        <td colspan="2">Leer</td>
+                        <td colspan="2">Dieses Konferenz Event enthält <!--ko text: Publications().length--><!--/ko--> Publikationen</td>
                         <td data-bind="text: Key"></td>
                     </tr>
                     <!-- ko foreach: Publications -->
@@ -131,13 +131,7 @@
             return true;
         }
 
-        //function removeItem(item) {
-        //     sendAjaxRequest("DELETE", function() {
-        //          getAllItems();
-        //     }, item.ReservationId);
-        //}
         $(document).ready(function() {
-            //getAllItems();
             ko.applyBindings(model);
         });
     </script>
