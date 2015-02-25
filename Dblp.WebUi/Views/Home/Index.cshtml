@@ -24,22 +24,26 @@
                 </thead>
                 <tbody data-bind="foreach: model.Events">
                     <tr class="info">
-                        <td><input type="checkbox" /></td>
+                        <td>
+                            <div class="btn btn-default" data-bind="visible: !ShowExtended()">
+                                <span data-bind="click: model.ShowAllPublicationsFor" class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                            </div>
+                            <div class="btn btn-default" data-bind="visible: ShowExtended()">
+                                <span data-bind="click: model.ShowNoPublicationsFor" class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                            </div>
+                        </td>
                         <td data-bind="text: Title">Der Titel</td>
                         <td colspan="2">Dieses Konferenz Event enthält <!--ko text: Publications().length--><!--/ko--> Publikationen</td>
                         <td data-bind="text: Key"></td>
                     </tr>
                     <!-- ko foreach: Publications -->
-                    <tr data-bind="visible: model.ShowAllPublications()">
+                    <tr data-bind="visible: $parent.ShowExtended()">
                         <td><input type="checkbox" data-bind="click:toggleCheckbox, checked:selected" /></td>
                         <td></td>
                         <td colspan="2" data-bind="text: Title">Der Titel</td>
                         <td data-bind="text: Key"></td>
                     </tr>
                     <!-- /ko -->
-                    <tr data-bind="visible: !model.ShowAllPublications()">
-                        <td colspan="4">Die Konferenz hat weitere Elemente. <b data-bind="click: model.ShowAllPublicationsFor">Anzeigen?</b> </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
@@ -48,17 +52,21 @@
 
 @section JavaScript
 {
-    @Scripts.Render("~/bundles/ko") 
+    @Scripts.Render("~/bundles/ko")
     <script type="text/javascript" src="@Url.Content("/Scripts/site.js")"></script>
     <script type="text/javascript">
         var model = {
             ConferenceTitle: ko.observable(),
             Key: ko.observable(),
             Events: ko.observableArray(),
-            ShowAllPublications: ko.observable(),
+
             ShowAllPublicationsFor: function (currentItem) {
-                model.ShowAllPublications(true);
+                currentItem.ShowExtended(true);
                 return false;
+            },
+            ShowNoPublicationsFor: function (currentItem) {
+                currentItem.ShowExtended(false);
+                return true;
             }
         };
 
@@ -67,12 +75,12 @@
         }
 
         function getAllItems(key) {
-            sendAjaxRequest("GET", function(data) {
+            sendAjaxRequest("GET", function (data) {
 
                 model.ConferenceTitle(data.ConferenceTitle);
                 model.Key(data.Key);
-                
-                model.ShowAllPublications(false);
+
+
                 model.Events.removeAll();
                 for (var i = 0; i < data.Events.length; i++) {
                     var publicationsInSubConference = ko.observableArray();
@@ -94,7 +102,8 @@
                             Key: data.Events[i].Key,
                             selected: ko.observable(false),
                             Title: data.Events[i].Title,
-                            Publications: publicationsInSubConference
+                            Publications: publicationsInSubConference,
+                            ShowExtended: ko.observable(false)
                         });
                     }
                 }
@@ -114,7 +123,7 @@
         function AddItemToCart(self) {
             $.ajax("/ShoppingCart/AddKey/" + self.Key, {
                 type: "POST",
-                success: function() {
+                success: function () {
                     self.selected(true);
                 }
             });
@@ -124,14 +133,14 @@
         function RemoveItemFromCart(self) {
             $.ajax("/ShoppingCart/DeleteKey/" + self.Key, {
                 type: "DELETE",
-                success: function() {
+                success: function () {
                     self.selected(false);
                 }
             });
             return true;
         }
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             ko.applyBindings(model);
         });
     </script>
