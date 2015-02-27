@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthorsHelper.cs" />
+    <Compile Include="BibTeXContentProvider.cs" />
     <Compile Include="Concrete\EfRepository.cs" />
     <Compile Include="Concrete\InMemoryRepository.cs" />
     <Compile Include="Concrete\StatusRepository.cs" />

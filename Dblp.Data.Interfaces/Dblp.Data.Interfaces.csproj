@@ -48,6 +48,7 @@
     <Compile Include="Entities\EventList.cs" />
     <Compile Include="Entities\Publication.cs" />
     <Compile Include="IConferenceStructurSaver.cs" />
+    <Compile Include="IDblpBibTexRepository.cs" />
     <Compile Include="IDblpDataStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
