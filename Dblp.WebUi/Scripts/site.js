@@ -6,6 +6,21 @@
     remote: '/api/Query/GetConferences/%QUERY'
 });
 topSearchResults.initialize();
+
+var publications = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace("DisplayText"),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    limit: 10,
+    //prefetch: '/api/Prefetch/GetConferences',
+    remote: {
+        url: '/api/Query/GetPublications/',
+        replace: function(url, encodedQuery) {
+            return url + encodeURIComponent($.trim(decodeURIComponent(encodedQuery)));
+        }
+    }
+});
+//publications.initialize();
+
 //var topPersonSearchResults = new Bloodhound({
 //    datumTokenizer: Bloodhound.tokenizers.obj.whitespace("DisplayText"),
 //    queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -57,16 +72,21 @@ $(document).ready(function () {
 }
     }
 
-    //,{
-    //    name: 'topPersonSearchResults',
-    //    displayKey: 'DisplayText',
-    //    // `ttAdapter` wraps the suggestion engine in an adapter that
-    //    // is compatible with the typeahead jQuery plugin
-    //    source: topPersonSearchResults.ttAdapter(),
-    //    templates: {
-    //        header: '<h3 class="league-name">Personen</h3>'
-    //    }
-    //}
+    ,{
+        name: 'publications',
+        displayKey: 'DisplayText',
+        // `ttAdapter` wraps the suggestion engine in an adapter that
+        // is compatible with the typeahead jQuery plugin
+        source: publications.ttAdapter(),
+        templates: {
+            header: '<h3>Publikationen</h3>',
+            empty: [
+                '<div class="empty-message">',
+                'Es konnten keine Publikationen gefunden werden',
+                '</div>'
+            ].join('\n'),
+        }
+    }
     ).on('typeahead:selected', function (obj, datum) {
         //sendAjaxRequest("GET", function() {}, datum.Key);
         getAllItems(datum.Key);
