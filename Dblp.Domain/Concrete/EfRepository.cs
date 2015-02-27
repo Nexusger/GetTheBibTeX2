@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Core.Common.EntitySql;
 using System.Linq;
 using System.Linq.Expressions;
@@ -112,6 +113,21 @@ namespace Dblp.Domain.Concrete
         public IQueryable<Publication> GetPublications(string searchString, int maxAmount)
         {
             throw new NotImplementedException();
+        }
+
+        public IQueryable<SearchResult> GetPublicationsAsSearchResults(string searchString)
+        {
+            return GetPublicationsAsSearchResults(searchString, _maxAllowedConferences);
+        }
+
+        public IQueryable<SearchResult> GetPublicationsAsSearchResults(string searchString, int maxAmount)
+        {
+            var publication = _store.Publications.Where(t => t.Title.Contains(searchString)).Take(maxAmount);
+            if (publication.Any())
+            {
+                return publication.Select(t => new SearchResult(){Key = t.Key, DisplayText = t.Title, Usage = 0, SearchResultSourceType = SearchResultSourceType.Paper, Relation = ""});
+            }
+            return new List<SearchResult>().AsQueryable();
         }
 
         public bool ConferenceExists(string key)

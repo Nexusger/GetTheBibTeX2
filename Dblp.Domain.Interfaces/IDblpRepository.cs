@@ -24,6 +24,10 @@ namespace Dblp.Domain.Interfaces
         IQueryable<Publication> GetPublications(int maxAmount);
         IQueryable<Publication> GetPublications(string searchString);
         IQueryable<Publication> GetPublications(string searchString, int maxAmount);
+
+        IQueryable<SearchResult> GetPublicationsAsSearchResults(string searchString);
+        IQueryable<SearchResult> GetPublicationsAsSearchResults(string searchString, int maxAmount);
+
         bool PublicationExists(string key);
     }
 }

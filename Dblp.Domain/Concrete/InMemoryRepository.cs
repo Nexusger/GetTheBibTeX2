@@ -77,6 +77,16 @@ namespace Dblp.Domain.Concrete
             throw new System.NotImplementedException();
         }
 
+        public IQueryable<SearchResult> GetPublicationsAsSearchResults(string searchString)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IQueryable<SearchResult> GetPublicationsAsSearchResults(string searchString, int maxAmount)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public bool ConferenceExists(string key)
         {
             throw new System.NotImplementedException();
