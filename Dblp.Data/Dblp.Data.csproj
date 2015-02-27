@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConstantDblpRespository.cs" />
     <Compile Include="EfDbContext.cs" />
     <Compile Include="EfDblpDataStore.cs" />
     <Compile Include="Helper\EntityHelper.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Saver\JsonSaver.cs" />
     <Compile Include="Extract\StructureExtractor.cs" />
     <Compile Include="XmlDataStore.cs" />
+    <Compile Include="Extract\XmlExtractor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
