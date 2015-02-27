@@ -37,7 +37,6 @@ namespace Dblp.Data
             });
         }
 
-        //public IEnumerable<SearchResult> SearchResults { get; private set; }
 
         public IQueryable<Conference> Conferences
         {
