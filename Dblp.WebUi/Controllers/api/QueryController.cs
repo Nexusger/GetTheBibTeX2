@@ -28,5 +28,10 @@ namespace Dblp.WebUi.Controllers.api
             var searchResults = _repository.GetSearchResults(key, 10);
             return searchResults;
         }
+                [HttpGet]
+        public IEnumerable<SearchResult> GetPublications(string key)
+        {
+            return _repository.GetPublicationsAsSearchResults(key,10);
+        }
     }
 }

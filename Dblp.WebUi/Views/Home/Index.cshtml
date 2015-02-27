@@ -4,7 +4,7 @@
     ViewBag.Title = "Durchsuchen der Dblp";
 }
 
-<h2>Durchsuchen der DBLP</h2>
+<h2 style="display: inline-block">Durchsuchen der DBLP</h2><img id="spinner" src="~/Content/spiffygif_30x30.gif" />
 @using (Html.BeginForm("AddItem", "ShoppingCart"))
 {
     @Html.InputWithGlyphicon()
@@ -19,7 +19,6 @@
                         <th>Konferenz</th>
                         <th>Titel</th>
                         <th>Autoren</th>
-                        <th>Key (für Debuggen)</th>
                     </tr>
                 </thead>
                 <tbody data-bind="foreach: model.Events">
@@ -32,16 +31,14 @@
                                 <span data-bind="click: model.ShowNoPublicationsFor" class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
                             </div>
                         </td>
-                        <td data-bind="text: Title">Der Titel</td>
-                        <td colspan="2">Dieses Konferenz Event enthält <!--ko text: Publications().length--><!--/ko--> Publikationen</td>
-                        <td data-bind="text: Key"></td>
+                        <td colspan="2" data-bind="text: Title">Der Titel</td>
+                        <td>Dieses Konferenz Event enthält <!--ko text: Publications().length--><!--/ko--> Publikationen</td>
                     </tr>
                     <!-- ko foreach: Publications -->
                     <tr data-bind="visible: $parent.ShowExtended()">
                         <td><input type="checkbox" data-bind="click:toggleCheckbox, checked:selected" /></td>
                         <td></td>
                         <td colspan="2" data-bind="text: Title">Der Titel</td>
-                        <td data-bind="text: Key"></td>
                     </tr>
                     <!-- /ko -->
                 </tbody>
@@ -142,7 +139,20 @@
 
         $(document).ready(function () {
             ko.applyBindings(model);
+            $("#spinner").hide();
         });
+
+
+            //Call method to display spinner
+        $(document).ajaxSend(function (event, jqXHR, settings) {
+            $("#spinner").show();
+        });
+
+            //Call method to hide spinner
+        $(document).ajaxComplete(function (event, jqXHR, settings) {
+            $("#spinner").hide();
+        });
+
     </script>
 }
 

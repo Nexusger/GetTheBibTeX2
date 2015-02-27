@@ -5,3 +5,10 @@
 #summary {
     margin-top: 15px;
 }
+
+#spinner {
+    width: 30px;
+    height: 30px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
