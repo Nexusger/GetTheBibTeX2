@@ -17,6 +17,21 @@ namespace Dblp.Helper
             return null;
         }
 
+        public static List<string> ExtractAuthors(this XElement xelement)
+        {
+            var result = new List<string>();
+            var authors = xelement.XPathSelectElements("author|Author");
+            foreach (var xElement in authors)
+            {
+                var extractedAuthorName = xElement.Value;
+                if (!string.IsNullOrEmpty(extractedAuthorName))
+                {
+                    result.Add(extractedAuthorName);
+                }
+            }
+            return result;
+        }
+
         public static string ExtractAttribute(this XElement xElement, string xpathSelector, string attibuteName)
         {
             var element = xElement.XPathSelectElement(xpathSelector);
