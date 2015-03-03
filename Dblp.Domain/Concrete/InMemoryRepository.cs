@@ -37,17 +37,17 @@ namespace Dblp.Domain.Concrete
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<SearchResult> GetSearchResults(int maxAmount)
+        public IQueryable<SearchResult> GetConferencesAsSearchResults(int maxAmount)
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<SearchResult> GetSearchResults(string searchString)
+        public IQueryable<SearchResult> GetConferencesAsSearchResults(string searchString)
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<SearchResult> GetSearchResults(string searchString, int maxAmount)
+        public IQueryable<SearchResult> GetConferencesAsSearchResults(string searchString, int maxAmount)
         {
             throw new System.NotImplementedException();
         }
@@ -77,6 +77,11 @@ namespace Dblp.Domain.Concrete
             throw new System.NotImplementedException();
         }
 
+        public IQueryable<SearchResult> GetPublicationsAsSearchResults(int maxAmount)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IQueryable<SearchResult> GetPublicationsAsSearchResults(string searchString)
         {
             throw new System.NotImplementedException();
@@ -87,12 +92,32 @@ namespace Dblp.Domain.Concrete
             throw new System.NotImplementedException();
         }
 
+        public IQueryable<SearchResult> GetPublicationsForAuthorAsSearchResults(string authorName)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public bool ConferenceExists(string key)
         {
             throw new System.NotImplementedException();
         }
 
         public bool PublicationExists(string key)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IQueryable<SearchResult> GetAuthorsAsSearchResults(int maxAmount)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IQueryable<SearchResult> GetAuthorsAsSearchResults(string searchString)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IQueryable<SearchResult> GetAuthorsAsSearchResults(string searchString, int maxAmount)
         {
             throw new System.NotImplementedException();
         }

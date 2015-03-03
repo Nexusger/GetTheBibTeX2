@@ -73,17 +73,17 @@ namespace Dblp.Domain.Concrete
                     .AsQueryable();
         }
 
-        public IQueryable<SearchResult> GetSearchResults(int maxAmount)
+        public IQueryable<SearchResult> GetConferencesAsSearchResults(int maxAmount)
         {
             return _store.Conferences.Take(maxAmount).Select(t => (new SearchResult() { Key = t.Key, DisplayText = t.ConferenceTitle + " (" + t.Abbr + ")", Usage = 0, SearchResultSourceType = SearchResultSourceType.Conference, Relation = "" }));
         }
 
-        public IQueryable<SearchResult> GetSearchResults(string searchString)
+        public IQueryable<SearchResult> GetConferencesAsSearchResults(string searchString)
         {
-            return GetSearchResults(searchString, _maxAllowedConferences);
+            return GetConferencesAsSearchResults(searchString, _maxAllowedConferences);
         }
 
-        public IQueryable<SearchResult> GetSearchResults(string searchString, int maxAmount)
+        public IQueryable<SearchResult> GetConferencesAsSearchResults(string searchString, int maxAmount)
         {
             return _store.Conferences.Where(
                 t => (t.Abbr.Contains(searchString)) || (t.ConferenceTitle.Contains(searchString)))
@@ -102,17 +102,30 @@ namespace Dblp.Domain.Concrete
 
         public IQueryable<Publication> GetPublications(int maxAmount)
         {
-            throw new NotImplementedException();
+            var publications = _store.Publications.Take(maxAmount).Select(t=>t.ToDomainPublication());
+            return publications;
         }
 
         public IQueryable<Publication> GetPublications(string searchString)
         {
-            throw new NotImplementedException();
+            var publications = _store.Publications.Where(k=>k.Title.Contains(searchString)).Select(t => t.ToDomainPublication());
+            return publications;
         }
 
         public IQueryable<Publication> GetPublications(string searchString, int maxAmount)
         {
-            throw new NotImplementedException();
+            var publications = _store.Publications.Where(k => k.Title.Contains(searchString)).Take(maxAmount).Select(t => t.ToDomainPublication());
+            return publications;
+        }
+
+        public IQueryable<SearchResult> GetPublicationsAsSearchResults(int maxAmount)
+        {
+            var publication = _store.Publications.Take(maxAmount);
+            if (publication.Any())
+            {
+                return publication.Select(t => new SearchResult() { Key = t.Key, DisplayText = t.Title, Usage = 0, SearchResultSourceType = SearchResultSourceType.Paper, Relation = "" });
+            }
+            return new List<SearchResult>().AsQueryable();
         }
 
         public IQueryable<SearchResult> GetPublicationsAsSearchResults(string searchString)
@@ -130,6 +143,17 @@ namespace Dblp.Domain.Concrete
             return new List<SearchResult>().AsQueryable();
         }
 
+        public IQueryable<SearchResult> GetPublicationsForAuthorAsSearchResults(string authorName)
+        {
+            var authors = _store.Authors.Where(t => t.Name == authorName);
+            var publication = _store.Publications.Where(t=> authors.Any(k=>k.Publication==t));
+            if (publication.Any())
+            {
+                return publication.Select(t => new SearchResult() { Key = t.Key, DisplayText = t.Title, Usage = 0, SearchResultSourceType = SearchResultSourceType.Paper, Relation = "" });
+            }
+            return new List<SearchResult>().AsQueryable();
+        }
+
         public bool ConferenceExists(string key)
         {
             return _store.Conferences.Any(t => t.Key == key);
@@ -138,6 +162,36 @@ namespace Dblp.Domain.Concrete
         public bool PublicationExists(string key)
         {
             return _store.Publications.Any(t => t.Key == key);
+        }
+
+        public IQueryable<SearchResult> GetAuthorsAsSearchResults(int maxAmount)
+        {
+            var authors = _store.Authors.Select(t => t.Name).Distinct().Take(maxAmount);
+            if (authors.Any())
+            {
+                return authors.Select(t => new SearchResult() { Key = "", DisplayText = t, Usage = 0, SearchResultSourceType = SearchResultSourceType.Person, Relation = "" });
+            }
+            return new List<SearchResult>().AsQueryable();
+        }
+
+        public IQueryable<SearchResult> GetAuthorsAsSearchResults(string searchString)
+        {
+            var authors = _store.Authors.Select(t => t.Name).Distinct().Where(t => t.Contains(searchString));
+            if (authors.Any())
+            {
+                return authors.Select(t => new SearchResult() { Key = "", DisplayText = t, Usage = 0, SearchResultSourceType = SearchResultSourceType.Person, Relation = "" });
+            }
+            return new List<SearchResult>().AsQueryable();
+        }
+
+        public IQueryable<SearchResult> GetAuthorsAsSearchResults(string searchString, int maxAmount)
+        {
+            var authors = _store.Authors.Select(t => t.Name).Distinct().Where(t => t.Contains(searchString)).Take(maxAmount);
+            if (authors.Any())
+            {
+                return authors.Select(t => new SearchResult() { Key="", DisplayText = t, Usage = 0, SearchResultSourceType = SearchResultSourceType.Person, Relation = "" });
+            }
+            return new List<SearchResult>().AsQueryable();
         }
     }
 }
