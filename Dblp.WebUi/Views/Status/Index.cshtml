@@ -11,5 +11,5 @@
             <li alt="@element.HoverText" class="list-group-item @(@element.SpecialMarker ? "list-group-item-danger":"")"><strong>@element.DisplayText: </strong><span class="badge">@element.Value</span></li>
         }
     </ul>
-<span class="text-muted">Last updated: @Model.LastUpdated</span>
+<span class="text-muted">Last updated: @Model.LoadDetails.LastLoaded (Dauer @Model.LoadDetails.LoadTime.Hours:@Model.LoadDetails.LoadTime.Minutes:@Model.LoadDetails.LoadTime.Seconds für @Model.LoadDetails.SizeOfXml Bytes)</span>
 </div>

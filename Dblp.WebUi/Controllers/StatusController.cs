@@ -17,7 +17,6 @@ namespace Dblp.WebUi.Controllers
         // GET: Status
         public ActionResult Index()
         {
-            var lastUpdated = _repo.LastUpdated();
 
             var statusElements = new List<StatusListElement>();
             var numberOfAuthors = _repo.NumberOfAuthors();
@@ -53,7 +52,10 @@ namespace Dblp.WebUi.Controllers
                 Value = numberOfPublications
             });
 
-            var model = new StatusViewModel(lastUpdated, statusElements);
+
+            var loadDetails = _repo.DataLoadDetails();
+
+            var model = new StatusViewModel(loadDetails, statusElements);
 
             return View(model);
         }

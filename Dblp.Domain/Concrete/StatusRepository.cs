@@ -40,7 +40,7 @@ namespace Dblp.Domain.Concrete
 
         public LoadDetails DataLoadDetails()
         {
-            throw new NotImplementedException();
+            return new LoadDetails(){LastLoaded = DateTime.UtcNow,LoadTime = TimeSpan.FromMinutes(60),SizeOfXml = 99999};
         }
     }
 }

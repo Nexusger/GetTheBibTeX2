@@ -8,7 +8,6 @@ namespace Dblp.Domain.Interfaces
         long NumberOfConferenceEvents();
         long NumberOfAuthors();
         long NumberOfPublications();
-        DateTime LastUpdated();
         LoadDetails DataLoadDetails();
 
     }

@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http.ModelBinding;
+using Dblp.Domain.Interfaces;
 
 namespace Dblp.WebUi.Models
 {
     public class StatusViewModel
 
     {
-        public StatusViewModel(DateTime lastUpdated, List<StatusListElement> elements)
+        public StatusViewModel(LoadDetails loadDetails, List<StatusListElement> elements)
         {
-            LastUpdated = lastUpdated;
+            LoadDetails = loadDetails;
             Elements = elements;
         }
-        public DateTime LastUpdated { get; private set; }
+        public LoadDetails LoadDetails { get; set; }
         public List<StatusListElement> Elements { get; set; }
 
     }
