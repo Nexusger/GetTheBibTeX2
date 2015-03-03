@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
+using System.Xml.Linq;
 using Dblp.Data.Interfaces;
 using Dblp.Data.Interfaces.Entities;
+using Dblp.Helper;
 
 namespace Dblp.Data.Saver
 {
-    public class EntityFrameWorkSaver : IConferenceStructurSaver
+    public class EntityFrameWorkSaver : IConferenceStructurSaver, IBibTeXSaver,IDetailSaver
     {
 
         private readonly long _batchSize;
@@ -18,7 +22,6 @@ namespace Dblp.Data.Saver
 
         public bool SaveConferences(IEnumerable<Conference> conferences)
         {
-            var maxAmount = conferences.Count();
             var i = 0;
             var db = new EfDbContext();
 
@@ -28,7 +31,6 @@ namespace Dblp.Data.Saver
                 db.Configuration.AutoDetectChangesEnabled = false;
                 db.Configuration.ValidateOnSaveEnabled = false;
                 db.Conferences.Add(conference);
-                Trace.TraceInformation("Prozent eingefügt: {0} ({1})", ((float)100 / (float)maxAmount) * (float)i, i);
                 i++;
                 if (i % _batchSize == 0)
                 {
@@ -40,6 +42,82 @@ namespace Dblp.Data.Saver
             db.SaveChanges();
             db.Dispose();
 
+            return true;
+        }
+        public bool SaveBibTexEntries(IEnumerable<BibTexEntry> entries)
+        {
+            var i = 0;
+            var db = new EfDbContext();
+
+            foreach (var entry in entries)
+            {
+                db.Configuration.AutoDetectChangesEnabled = false;
+                db.Configuration.ValidateOnSaveEnabled = false;
+                db.BibTexEntries.Add(entry);
+                i++;
+                if (i % _batchSize == 0)
+                {
+                    db.SaveChanges();
+                    db.Dispose();
+                    db = new EfDbContext();
+                }
+            }
+
+            db.SaveChanges();
+            db.Dispose();
+            return true;
+        }
+
+        public bool UpdateStructureSetAuthor(IEnumerable<KeyValuePair<string, string>> entries)
+        {
+            var i = 0;
+            var db = new EfDbContext();
+
+            foreach (var entry in entries)
+            {
+                db.Configuration.AutoDetectChangesEnabled = true;
+                db.Configuration.ValidateOnSaveEnabled = true;
+
+                var xelement = XElement.Parse(entry.Value);
+                var authors = xelement.ExtractAuthors();
+                if (authors.Any())
+                {
+
+                    var publication = db.Publications.FirstOrDefault(t => t.Key == entry.Key);
+                    if (publication != null)
+                    {
+                        publication.Authors.AddRange(authors.Select(k=>new Author(){Name = k,Publication = publication}));
+                        i++;
+                        if (i % _batchSize == 0)
+                        {
+                            db.SaveChanges();
+                            db.Dispose();
+                            db = new EfDbContext();
+                        }
+                        if (i%100000 == 0)
+                        {
+                            Console.WriteLine("100K Done");
+                        }
+
+                    }
+
+
+                }
+
+
+            }
+
+
+            db.SaveChanges();
+            db.Dispose();
+            return true;
+        }
+
+        public bool SaveLoadDetails(LoadDetails loadDetails)
+        {
+            var db = new EfDbContext();
+            db.LoadDetails.Add(loadDetails);
+            db.SaveChanges();
             return true;
         }
     }

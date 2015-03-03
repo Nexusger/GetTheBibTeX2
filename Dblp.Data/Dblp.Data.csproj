@@ -60,6 +60,8 @@
     <Compile Include="Extract\KeyTitleLookUp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Saver\EntityFrameWorkSaver.cs" />
+    <Compile Include="Saver\IBibTeXSaver.cs" />
+    <Compile Include="Saver\IDetailSaver.cs" />
     <Compile Include="Saver\JsonSaver.cs" />
     <Compile Include="Extract\StructureExtractor.cs" />
     <Compile Include="XmlDataStore.cs" />
