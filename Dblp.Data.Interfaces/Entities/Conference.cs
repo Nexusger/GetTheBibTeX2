@@ -19,10 +19,14 @@ namespace Dblp.Data.Interfaces.Entities
 
         [Key]
         [DataMember]
+        [MaxLength(150)]
         public string Key { get; set; }
         [DataMember]
+        [MaxLength(100)]
         public string Abbr { get; set; }
+
         [DataMember]
+        [MaxLength(1000)]
         public string ConferenceTitle { get; set; }
         [DataMember]
         public virtual EventList Events { get; set; }

@@ -11,12 +11,20 @@ namespace Dblp.Data.Interfaces.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [DataMember]
+
+        [MaxLength(150)]
         public string Key { get; set; }
         [DataMember]
         public virtual AuthorList Authors { get; set; }
         [DataMember]
+        [MaxLength(1000)]
         public string Title { get; set; }
         public virtual ConferenceEvent ConferenceEvent { get; set; }
+
+        public Publication()
+        {
+            Authors = new AuthorList();
+        }
     }
 }
 
