@@ -41,11 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthorNameEuality.cs" />
     <Compile Include="Entities\Author.cs" />
     <Compile Include="Entities\AuthorList.cs" />
+    <Compile Include="Entities\BibTexEntry.cs" />
     <Compile Include="Entities\Conference.cs" />
     <Compile Include="Entities\ConferenceEvent.cs" />
     <Compile Include="Entities\EventList.cs" />
+    <Compile Include="Entities\LoadDetails.cs" />
     <Compile Include="Entities\Publication.cs" />
     <Compile Include="IConferenceStructurSaver.cs" />
     <Compile Include="IDblpBibTexRepository.cs" />
