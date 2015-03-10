@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthorNameEuality.cs" />
     <Compile Include="Entities\Author.cs" />
     <Compile Include="Entities\AuthorList.cs" />
     <Compile Include="Entities\BibTexEntry.cs" />
