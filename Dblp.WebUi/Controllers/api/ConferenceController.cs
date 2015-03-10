@@ -15,10 +15,10 @@ namespace Dblp.WebUi.Controllers.api
             _repo = repo;
         }
 
-        public IEnumerable<Conference> GetConferences()
-        {
-            return _repo.GetConferences(15);
-        }
+        //public IEnumerable<Conference> GetConferences()
+        //{
+        //    return _repo.GetConferences(15);
+        //}
 
         public Conference GetConference(string key)
         {

@@ -1,0 +1,34 @@
+﻿<div class="panel-heading ConferenceKnockoutTable">Konferenz: <!--ko text: model.Title--><!--/ko--></div>
+<div class="panel-body ConferenceKnockoutTable">
+    <table class="table table-striped table-condensed">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Konferenz</th>
+                <th>Titel</th>
+                <th>Autoren</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: model.conferenceModel.Events">
+            <tr class="info">
+                <td>
+                    <div class="btn btn-default" data-bind="visible: !ShowExtended()">
+                        <span data-bind="click: model.conferenceModel.ShowAllPublicationsFor" class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                    </div>
+                    <div class="btn btn-default" data-bind="visible: ShowExtended()">
+                        <span data-bind="click: model.conferenceModel.ShowNoPublicationsFor" class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                    </div>
+                </td>
+                <td colspan="2" data-bind="text: Title">Der Titel</td>
+                <td>Dieses Konferenz Event enthält <!--ko text: Publications().length--><!--/ko--> Publikationen</td>
+            </tr>
+            <!-- ko foreach: Publications -->
+            <tr data-bind="visible: $parent.ShowExtended()">
+                <td><input type="checkbox" data-bind="click:toggleCheckbox, checked:selected" /></td>
+                <td></td>
+                <td colspan="2" data-bind="text: Title">Der Titel</td>
+            </tr>
+            <!-- /ko -->
+        </tbody>
+    </table>
+</div>

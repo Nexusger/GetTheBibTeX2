@@ -7,6 +7,9 @@ using Dblp.Domain.Interfaces.Entities;
 
 namespace Dblp.WebUi.Controllers.api
 {
+    /// <summary>
+    /// Is used for the typeahead bloodhound search
+    /// </summary>
     public class PrefetchController : ApiController
     {
         private IDblpRepository _repository;
@@ -16,26 +19,26 @@ namespace Dblp.WebUi.Controllers.api
             _repository = repository;
         }
 
-        // GET: api/Prefetch
-        [HttpGet]
-        public IEnumerable<SearchResult> GetSearchResults()
-        {
-            return null;
         
-        //    return _repository.SearchResults.Where(sr => sr.SearchResultSourceType != SearchResultSourceType.Person).Take(100);
-        }
         [HttpGet]
-        public IEnumerable<SearchResult> GetPeople()
+        public IEnumerable<SearchResult> GetPublications()
         {
-                return null;
-                //return _repository.SearchResults.Where(sr => sr.SearchResultSourceType == SearchResultSourceType.Person).Take(100);
+            return _repository.GetPublicationsAsSearchResults(100);
         }
+
+        [HttpGet]
+        public IEnumerable<SearchResult> GetAuthors()
+        {
+            return _repository.GetAuthorsAsSearchResults(100);
+        }
+
         [HttpGet]
         public IEnumerable<SearchResult> GetConferences()
         {
-            var searchResults = _repository.GetSearchResults(100);
+            var searchResults = _repository.GetConferencesAsSearchResults(100);
             return
                 searchResults;
         }
+    
     }
 }

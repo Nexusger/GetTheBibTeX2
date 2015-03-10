@@ -10,40 +10,10 @@
     @Html.InputWithGlyphicon()
     @Html.Hidden("dblpKey")
     <div id="summary" class="panel panel-primary">
-        <div class="panel-heading">Konferenz: <!--ko text: model.ConferenceTitle--><!--/ko--></div>
-        <div class="panel-body">
-            <table class="table table-striped table-condensed">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Konferenz</th>
-                        <th>Titel</th>
-                        <th>Autoren</th>
-                    </tr>
-                </thead>
-                <tbody data-bind="foreach: model.Events">
-                    <tr class="info">
-                        <td>
-                            <div class="btn btn-default" data-bind="visible: !ShowExtended()">
-                                <span data-bind="click: model.ShowAllPublicationsFor" class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                            </div>
-                            <div class="btn btn-default" data-bind="visible: ShowExtended()">
-                                <span data-bind="click: model.ShowNoPublicationsFor" class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                            </div>
-                        </td>
-                        <td colspan="2" data-bind="text: Title">Der Titel</td>
-                        <td>Dieses Konferenz Event enthält <!--ko text: Publications().length--><!--/ko--> Publikationen</td>
-                    </tr>
-                    <!-- ko foreach: Publications -->
-                    <tr data-bind="visible: $parent.ShowExtended()">
-                        <td><input type="checkbox" data-bind="click:toggleCheckbox, checked:selected" /></td>
-                        <td></td>
-                        <td colspan="2" data-bind="text: Title">Der Titel</td>
-                    </tr>
-                    <!-- /ko -->
-                </tbody>
-            </table>
-        </div>
+        @Html.Partial("_AuthorKnockoutTable")
+        @Html.Partial("_ConferenceKnockoutTable")
+        @Html.Partial("_PublicationKnockoutTable")
+
     </div>
 }
 
@@ -51,108 +21,5 @@
 {
     @Scripts.Render("~/bundles/ko")
     <script type="text/javascript" src="@Url.Content("/Scripts/site.js")"></script>
-    <script type="text/javascript">
-        var model = {
-            ConferenceTitle: ko.observable(),
-            Key: ko.observable(),
-            Events: ko.observableArray(),
-
-            ShowAllPublicationsFor: function (currentItem) {
-                currentItem.ShowExtended(true);
-                return false;
-            },
-            ShowNoPublicationsFor: function (currentItem) {
-                currentItem.ShowExtended(false);
-                return true;
-            }
-        };
-
-        function sendAjaxRequest(httpMethod, callback, url) {
-            $.ajax("/api/Conference/GetConference" + (url ? "/" + url : "s"), { type: httpMethod, success: callback });
-        }
-
-        function getAllItems(key) {
-            sendAjaxRequest("GET", function (data) {
-
-                model.ConferenceTitle(data.ConferenceTitle);
-                model.Key(data.Key);
-
-
-                model.Events.removeAll();
-                for (var i = 0; i < data.Events.length; i++) {
-                    var publicationsInSubConference = ko.observableArray();
-                    if (data.Events[i].Publications != null) {
-                        for (var j = 0; j < data.Events[i].Publications.length; j++) {
-
-                            var currentPublication = data.Events[i].Publications[j];
-
-                            publicationsInSubConference.push(
-                            {
-                                Key: currentPublication.Key,
-                                Title: currentPublication.Title,
-                                Authors: currentPublication.Authors,
-                                selected: ko.observable(false)
-                            });
-                        }
-                        model.Events.push(
-                        {
-                            Key: data.Events[i].Key,
-                            selected: ko.observable(false),
-                            Title: data.Events[i].Title,
-                            Publications: publicationsInSubConference,
-                            ShowExtended: ko.observable(false)
-                        });
-                    }
-                }
-            }, key);
-        }
-
-        function toggleCheckbox() {
-            var self = this;
-            if (self.selected() == true) {
-                RemoveItemFromCart(self);
-            } else {
-                AddItemToCart(self);
-            }
-            return true;
-        }
-
-        function AddItemToCart(self) {
-            $.ajax("/ShoppingCart/AddKey/" + self.Key, {
-                type: "POST",
-                success: function () {
-                    self.selected(true);
-                }
-            });
-            return true;
-        }
-
-        function RemoveItemFromCart(self) {
-            $.ajax("/ShoppingCart/DeleteKey/" + self.Key, {
-                type: "DELETE",
-                success: function () {
-                    self.selected(false);
-                }
-            });
-            return true;
-        }
-
-        $(document).ready(function () {
-            ko.applyBindings(model);
-            $("#spinner").hide();
-        });
-
-
-            //Call method to display spinner
-        $(document).ajaxSend(function (event, jqXHR, settings) {
-            $("#spinner").show();
-        });
-
-            //Call method to hide spinner
-        $(document).ajaxComplete(function (event, jqXHR, settings) {
-            $("#spinner").hide();
-        });
-
-    </script>
 }
 

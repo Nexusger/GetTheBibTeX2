@@ -1,53 +1,39 @@
-﻿var topSearchResults = new Bloodhound({
+﻿var conferences = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace("DisplayText"),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     limit: 10,
     prefetch: '/api/Prefetch/GetConferences',
     remote: '/api/Query/GetConferences/%QUERY'
 });
-topSearchResults.initialize();
+conferences.initialize();
 
 var publications = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace("DisplayText"),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     limit: 10,
-    //prefetch: '/api/Prefetch/GetConferences',
+    prefetch: '/api/Prefetch/GetConferences',
     remote: {
         url: '/api/Query/GetPublications/',
-        replace: function(url, encodedQuery) {
+        replace: function (url, encodedQuery) {
             return url + encodeURIComponent($.trim(decodeURIComponent(encodedQuery)));
         }
     }
 });
-//publications.initialize();
+publications.initialize();
 
-//var topPersonSearchResults = new Bloodhound({
-//    datumTokenizer: Bloodhound.tokenizers.obj.whitespace("DisplayText"),
-//    queryTokenizer: Bloodhound.tokenizers.whitespace,
-//    limit: 10,
-//    prefetch: '/api/Prefetch/GetPeople',
-//    remote: '/api/Query/GetResults/query=%QUERY'
-
-//});
-//topPersonSearchResults.initialize();
-
-//var searches = [{ "Key": "homepages/d/TorbenDohrn", "FoundBy": "none", "DisplayText": "Torben Dohrn", "SearchResultSourceType": 0 }, { "Key": "homepages/d/FabianDohrn", "FoundBy": "none", "DisplayText": "Fred Dohrn", "SearchResultSourceType": 0 }, { "Key": "conf/l/lak", "FoundBy": "none", "DisplayText": "Learning Analyics Konference", "SearchResultSourceType": 1 }];
-//var lok = ['Fred', 'Bubl'];
-//var states = new Bloodhound({
-//    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-//    queryTokenizer: Bloodhound.tokenizers.whitespace,
-//    // `states` is an array of state names defined in "The Basics"
-//    local: $.map(searches, function (singleSearch) { return { value: singleSearch.DisplayText }; })
-//});
-//states.initialize();
-//var keys = new Bloodhound({
-//    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('klo'),
-//    queryTokenizer: Bloodhound.tokenizers.whitespace,
-//    // `states` is an array of state names defined in "The Basics"
-//    local: $.map(lok, function (lus) { return { klo: lus }; })
-//});
-
-//keys.initialize();
+var authors = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace("DisplayText"),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    limit: 10,
+    prefetch: '/api/Prefetch/GetAuthors',
+    remote: {
+        url: '/api/Query/GetAuthors/',
+        replace: function (url, encodedQuery) {
+            return url + encodeURIComponent($.trim(decodeURIComponent(encodedQuery)));
+        }
+    }
+});
+authors.initialize();
 
 $(document).ready(function () {
     $('#search .typeahead').typeahead(
@@ -57,11 +43,11 @@ $(document).ready(function () {
         minLength: 1
     },
     {
-        name: 'topSearchResults',
+        name: 'conferences',
         displayKey: 'DisplayText',
         // `ttAdapter` wraps the suggestion engine in an adapter that
         // is compatible with the typeahead jQuery plugin
-        source: topSearchResults.ttAdapter(),
+        source: conferences.ttAdapter(),
         templates: {
             header: '<h3>Konferenzen</h3>',
             empty: [
@@ -69,10 +55,9 @@ $(document).ready(function () {
                 'Es konnten keine Konferenzen gefunden werden',
                 '</div>'
             ].join('\n'),
-}
+        }
     }
-
-    ,{
+    , {
         name: 'publications',
         displayKey: 'DisplayText',
         // `ttAdapter` wraps the suggestion engine in an adapter that
@@ -87,8 +72,206 @@ $(document).ready(function () {
             ].join('\n'),
         }
     }
+    , {
+        name: 'authors',
+        displayKey: 'DisplayText',
+        // `ttAdapter` wraps the suggestion engine in an adapter that
+        // is compatible with the typeahead jQuery plugin
+        source: authors.ttAdapter(),
+        templates: {
+            header: '<h3>Autoren</h3>',
+            empty: [
+                '<div class="empty-message">',
+                'Es konnten keine Autoren gefunden werden',
+                '</div>'
+            ].join('\n'),
+        }
+    }
     ).on('typeahead:selected', function (obj, datum) {
-        //sendAjaxRequest("GET", function() {}, datum.Key);
-        getAllItems(datum.Key);
+        
+        getAllItems(datum);
     });
+});
+
+
+
+function getAllItems(datum) {
+    
+    switch(datum.SearchResultSourceType) {
+        case 0:
+            getAllPublicationsForAuthor(datum.DisplayText);
+            $('.AuthorKnockoutTable').show();
+            $('.ConferenceKnockoutTable').hide();
+            $('.PublicationKnockoutTable').hide();
+            break;
+        case 1:
+            getAllConferences(datum.Key);
+            $('.AuthorKnockoutTable').hide();
+            $('.ConferenceKnockoutTable').show();
+            $('.PublicationKnockoutTable').hide();
+            break;
+        case 2:
+            getAllPublications(datum.Key);
+            $('.AuthorKnockoutTable').hide();
+            $('.ConferenceKnockoutTable').hide();
+            $('.PublicationKnockoutTable').show();
+            break;
+        default:
+            alert('Unknown SearchResultType');
+    }
+}
+
+var model = {
+    Title: ko.observable(),
+    authorModel: {
+        AuthorName: ko.observable(),
+        Publications: ko.observableArray(),
+        selected: ko.observable(false)
+    },
+    conferenceModel: {
+        ConferenceTitle: ko.observable(),
+        Key: ko.observable(),
+        Events: ko.observableArray(),
+
+        ShowAllPublicationsFor: function (currentItem) {
+            currentItem.ShowExtended(true);
+            return false;
+        },
+        ShowNoPublicationsFor: function (currentItem) {
+            currentItem.ShowExtended(false);
+            return true;
+        }
+    },
+    publicationModel: {
+        PublicationTitle: ko.observable(),
+        Key: ko.observable(),
+        selected: ko.observable(false)
+    }
+};
+
+function sendAjaxRequest(httpMethod, callback, url) {
+    $.ajax("/api/Conference/GetConference" + (url ? "/" + url : "emptyValue"), { type: httpMethod, success: callback });
+}
+
+function sendAjaxRequestPublication(httpMethod, callback, url) {
+    $.ajax("/api/Publication/GetPublicationSearchResult" + (url ? "/" + url : "emptyValue"), { type: httpMethod, success: callback });
+}
+
+function sendAjaxRequestAuthor(httpMethod, callback, url) {
+    $.ajax("/api/Author/GetAuthorSearchResult" + (url ? "/" + url : "emptyValue"), { type: httpMethod, success: callback });
+}
+
+function getAllPublications(key) {
+    sendAjaxRequestPublication("GET", function (data) {
+        model.Title(data.PublicationName);
+        model.publicationModel.PublicationTitle(data.Publication.DisplayText);
+        model.publicationModel.Key(data.Publication.Key);
+    }, key);
+}
+
+function getAllPublicationsForAuthor(key) {
+    sendAjaxRequestAuthor("GET", function (data) {
+        model.Title(data.AuthorName);
+        model.authorModel.AuthorName(data.AuthorName);
+        model.authorModel.Publications.removeAll();
+        for (var i = 0; i < data.Publications.length; i++) {
+            model.authorModel.Publications.push(
+                {
+                    Key: ko.observable(data.Publications[i].Key),
+                    selected: ko.observable(false),
+                    Title: data.Publications[i].DisplayText
+                });
+            
+        }
+    }, key);
+}
+
+function getAllConferences(key) {
+    sendAjaxRequest("GET", function (data) {
+        model.Title(data.ConferenceTitle);
+        model.conferenceModel.ConferenceTitle(data.ConferenceTitle);
+        model.conferenceModel.Key(data.Key);
+
+
+        model.conferenceModel.Events.removeAll();
+        for (var i = 0; i < data.Events.length; i++) {
+            var publicationsInSubConference = ko.observableArray();
+            if (data.Events[i].Publications != null) {
+                for (var j = 0; j < data.Events[i].Publications.length; j++) {
+
+                    var currentPublication = data.Events[i].Publications[j];
+
+                    publicationsInSubConference.push(
+                    {
+                        Key: ko.observable(currentPublication.Key),
+                        Title: currentPublication.Title,
+                        Authors: currentPublication.Authors,
+                        selected: ko.observable(false)
+                    });
+                }
+                model.conferenceModel.Events.push(
+                {
+                    Key: ko.observable(data.Events[i].Key),
+                    selected: ko.observable(false),
+                    Title: data.Events[i].Title,
+                    Publications: publicationsInSubConference,
+                    ShowExtended: ko.observable(false)
+                });
+            }
+        }
+    }, key);
+}
+
+function toggleCheckbox() {
+    var self = this;
+    if (self.selected() == true) {
+        RemoveItemFromCart(self);
+    } else {
+        AddItemToCart(self);
+    }
+    return true;
+}
+
+function AddItemToCart(self) {
+    $.ajax("/ShoppingCart/AddKey/" + self.Key(), {
+        type: "POST",
+        success: function () {
+            self.selected(true);
+        }
+    });
+    return true;
+}
+
+function RemoveItemFromCart(self) {
+    $.ajax("/ShoppingCart/DeleteKey/" + self.Key(), {
+        type: "DELETE",
+        success: function () {
+            self.selected(false);
+        }
+    });
+    return true;
+}
+
+$(document).ready(function () {
+    $('.AuthorKnockoutTable').hide();
+    $('.ConferenceKnockoutTable').hide();
+    $('.PublicationKnockoutTable').hide();
+    ko.applyBindings(model);
+    $("#spinner").hide();
+});
+
+var callCounter = 0;
+
+//Call method to display spinner
+$(document).ajaxSend(function (event, jqXHR, settings) {
+    callCounter++;
+    $("#spinner").show();
+});
+
+//Call method to hide spinner
+$(document).ajaxComplete(function (event, jqXHR, settings) {
+    callCounter--;
+    if (callCounter == 0) {
+        $("#spinner").hide();
+    }
 });
