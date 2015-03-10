@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BibTexRepository.cs" />
     <Compile Include="ConstantDblpRespository.cs" />
     <Compile Include="EfDbContext.cs" />
     <Compile Include="EfDblpDataStore.cs" />

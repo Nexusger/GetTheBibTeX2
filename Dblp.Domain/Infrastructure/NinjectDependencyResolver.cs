@@ -34,7 +34,7 @@ namespace Dblp.Domain.Infrastructure
             _kernel.Bind<IDblpRepository>().To<EfRepository>();
             _kernel.Bind<IDblpDataStore>().To<EfDblpDataStore>();
             _kernel.Bind<IStatusRepository>().To<StatusRepository>();
-            _kernel.Bind<IDblpBibTexRepository>().To<ConstantDblpRespository>();
+            _kernel.Bind<IDblpBibTexRepository>().To<BibTexRepository>();
                 //_kernel.Bind<IDblpDataStore>().To<InMemoryDataStore>().InSingletonScope().WithConstructorArgument("pathTodblpXml", @"D:\dblp\dblp.xml").WithConstructorArgument("pathToBhtFolder", @"D:\dblp\bht\db\conf");
             _kernel.Bind<IBibTeXContentProvider>().To<BibTeXContentProvider>();
         }
