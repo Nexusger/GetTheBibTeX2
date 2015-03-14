@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dblp.Data", "Dblp.Data\Dblp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dblp.Data.Interfaces", "Dblp.Data.Interfaces\Dblp.Data.Interfaces.csproj", "{519DDFD5-B19E-45DF-B311-4CC130E9C2A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dblp.Helper.Test", "Dblp.Helper.Test\Dblp.Helper.Test.csproj", "{34342B87-0AB4-415B-BDFD-3395FF6FDBEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{519DDFD5-B19E-45DF-B311-4CC130E9C2A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{519DDFD5-B19E-45DF-B311-4CC130E9C2A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{519DDFD5-B19E-45DF-B311-4CC130E9C2A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34342B87-0AB4-415B-BDFD-3395FF6FDBEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34342B87-0AB4-415B-BDFD-3395FF6FDBEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34342B87-0AB4-415B-BDFD-3395FF6FDBEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34342B87-0AB4-415B-BDFD-3395FF6FDBEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
