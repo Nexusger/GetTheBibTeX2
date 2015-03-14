@@ -33,34 +33,6 @@ namespace Dblp.WebUi.Controllers
             GetCart().RemoveItem(new SearchResult(dblpKey, "", 0, SearchResultSourceType.Conference, ""));
         }
 
-        [HttpPost]
-        public RedirectToRouteResult AddItem(string dblpKey, string returnUrl)
-        {
-            if (!_repo.PublicationExists(dblpKey))
-            {
-
-                var searchResult = _repo.GetPublicationByKeyAsSearchResult(dblpKey);
-            if (searchResult != null)
-                GetCart().AddItem(searchResult); 
-            }
-            return RedirectToAction("Index", new { returnUrl });
-        }
-
-        public RedirectToRouteResult RemoveFromCart(string dblpKey, string returnUrl)
-        {
-
-
-            if (!_repo.PublicationExists(dblpKey))
-            {  
-            var searchResult = _repo.GetConferenceByKey(dblpKey).ToSearchResult();
-            if (searchResult != null)
-                GetCart().RemoveItem(searchResult);
-
-
-            }
-            return RedirectToAction("Index", new { returnUrl });
-        }
-
         private ShoppingCart GetCart()
         {
             var cart = (ShoppingCart)Session["ShoppingCart"];
