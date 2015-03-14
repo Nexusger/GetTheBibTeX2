@@ -19,7 +19,8 @@
                         <span data-bind="click: model.conferenceModel.ShowNoPublicationsFor" class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
                     </div>
                 </td>
-                <td colspan="2" data-bind="text: Title">Der Titel</td>
+                <td data-bind="text: Title">Der Titel</td>
+                <td><input type="checkbox" data-bind="click:toggleCheckbox, checked:selected" /></td>
                 <td>Dieses Konferenz Event enthält <!--ko text: Publications().length--><!--/ko--> Publikationen</td>
             </tr>
             <!-- ko foreach: Publications -->
