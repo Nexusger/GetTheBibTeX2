@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using Dblp.Domain;
 using Dblp.Domain.Interfaces;
@@ -20,10 +21,24 @@ namespace Dblp.WebUi.Controllers
 
         public void AddKey(string dblpKey)
         {
-
-            if (!_repo.PublicationExists(dblpKey))
-                return;
-            var searchResult = _repo.GetPublicationByKeyAsSearchResult(dblpKey);
+            SearchResult searchResult;
+            if (IsConferenceKey(dblpKey))
+            {
+                if (_repo.ConferenceExists(dblpKey))
+                {
+                    searchResult = _repo.GetConferenceEventsByKeyAsSearchResult(dblpKey);
+                }
+                else
+                {
+                    return;
+                }
+            }
+            else
+            {
+                if (!_repo.PublicationExists(dblpKey))
+                    return;
+                searchResult = _repo.GetPublicationByKeyAsSearchResult(dblpKey);
+            }
             if (searchResult != null)
                 GetCart().AddItem(searchResult);
         }
@@ -31,6 +46,11 @@ namespace Dblp.WebUi.Controllers
         public void DeleteKey(string dblpKey)
         {
             GetCart().RemoveItem(new SearchResult(dblpKey, "", 0, SearchResultSourceType.Conference, ""));
+        }
+
+        private static bool IsConferenceKey(string dblpKey)
+        {
+            return dblpKey.StartsWith("db");
         }
 
         private ShoppingCart GetCart()
@@ -56,7 +76,17 @@ namespace Dblp.WebUi.Controllers
 
         public FileResult Download()
         {
-            byte[] fileBytes = _bibTeXContentProvider.GetBibTexFileBytes(GetCart().SearchResults,BibTeXContentOptions.None);
+            var eventSearchResults =
+                GetCart().SearchResults.Where(t => t.SearchResultSourceType == SearchResultSourceType.Event);
+
+            var extendedSearchResults = new List<SearchResult>();
+            foreach (var eventSearchResult in eventSearchResults)
+            {
+                extendedSearchResults.AddRange(_repo.GetPublicationsForEventsAsSearchResults(eventSearchResult.Key));
+
+            }
+            extendedSearchResults.AddRange(GetCart().SearchResults);
+            byte[] fileBytes = _bibTeXContentProvider.GetBibTexFileBytes(extendedSearchResults, BibTeXContentOptions.None);
             const string fileName = "myfile.bib";
             return File(fileBytes, "text/x-bibtex", fileName);
         }

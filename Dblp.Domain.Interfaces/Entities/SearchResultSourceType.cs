@@ -4,6 +4,7 @@
     {
         Person,
         Conference,
-        Paper
+        Paper,
+        Event
     }
 }

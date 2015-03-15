@@ -13,6 +13,7 @@ namespace Dblp.Domain.Interfaces
         IQueryable<Conference> GetConferences(int maxAmount);
         IQueryable<Conference> GetConferences(string searchString);
         IQueryable<Conference> GetConferences(string searchString,int maxAmount);
+        SearchResult GetConferenceEventsByKeyAsSearchResult(string conferenceEventKey);
         bool ConferenceExists(string key);
 
         IQueryable<SearchResult> GetConferencesAsSearchResults(int maxAmount);
@@ -29,6 +30,7 @@ namespace Dblp.Domain.Interfaces
         IQueryable<SearchResult> GetPublicationsAsSearchResults(string searchString);
         IQueryable<SearchResult> GetPublicationsAsSearchResults(string searchString, int maxAmount);
         IQueryable<SearchResult> GetPublicationsForAuthorAsSearchResults(string authorName);
+        IQueryable<SearchResult> GetPublicationsForEventsAsSearchResults(string eventKey);
         
         bool PublicationExists(string key);
 

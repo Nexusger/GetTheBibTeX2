@@ -37,6 +37,16 @@ namespace Dblp.Domain.Concrete
             throw new System.NotImplementedException();
         }
 
+        public SearchResult GetConferenceEventsByKeyAsSearchResult(string conferenceEventKey)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public SearchResult GetConferencesByKeyAsSearchResult(string conferenceKey)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IQueryable<SearchResult> GetConferencesAsSearchResults(int maxAmount)
         {
             throw new System.NotImplementedException();
@@ -93,6 +103,11 @@ namespace Dblp.Domain.Concrete
         }
 
         public IQueryable<SearchResult> GetPublicationsForAuthorAsSearchResults(string authorName)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IQueryable<SearchResult> GetPublicationsForEventsAsSearchResults(string eventKey)
         {
             throw new System.NotImplementedException();
         }
