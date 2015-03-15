@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security;
 using System.Security.Policy;
 using System.Xml.Linq;
+using System.Xml.XPath;
 
 namespace Dblp.Helper
 {
@@ -15,36 +16,44 @@ namespace Dblp.Helper
             var attributeName = x.Name;
             result = string.Format("@{0}{{{1},\r\n", attributeName, x.GetKey());
             var singleNodes = new List<XNode>();
+            var nodeCounter = new Dictionary<string, int>();
             var multipleNodes = new List<XNode>();
-            foreach (var xNode in x.Nodes())
+            // Dblp url is internal link. External url attribute is called 'ee'
+            foreach (var xNode in x.Nodes().Where(t=>(t as XElement).Name!="url"))
             {
-                if (!singleNodes.Any(t => (t as XElement).Name == (xNode as XElement).Name))
+                if (nodeCounter.ContainsKey((xNode as XElement).Name.ToString()))
                 {
-                    singleNodes.Add(xNode);
+                    nodeCounter[(xNode as XElement).Name.ToString()]++;
                 }
                 else
                 {
-                    multipleNodes.Add(singleNodes.FirstOrDefault(t => (t as XElement).Name == (xNode as XElement).Name));
-                    singleNodes.Remove(singleNodes.FirstOrDefault(t => (t as XElement).Name == (xNode as XElement).Name));
-                    multipleNodes.Add(xNode);
+                    nodeCounter.Add((xNode as XElement).Name.ToString(),1);
                 }
             }
 
-            foreach (var node in x.Nodes())
+            foreach (var kvp in nodeCounter.Where(t=>t.Value>1))
             {
-                if (singleNodes.Any(t => (t as XElement).Name == (node as XElement).Name))
+                multipleNodes.AddRange(x.XPathSelectElements(kvp.Key));
+            }
+
+            var alreadyUsedMultipleNodeNames = new List<string>();
+            foreach (var node in x.Nodes().Where(t => (t as XElement).Name != "url"))
+            {
+                if (nodeCounter[(node as XElement).Name.ToString()]==1)
                 {
                     result += node.ToBibTeXAtribute();
                 }
                 else
                 {
-                    result += MultiNodeAttributesToBibTex(multipleNodes, node);
+                    if (!alreadyUsedMultipleNodeNames.Contains((node as XElement).Name.ToString()))
+                    {
+                        result += MultiNodeAttributesToBibTex(multipleNodes, node);
+                        alreadyUsedMultipleNodeNames.Add((node as XElement).Name.ToString());                        
+                    }
                 }
             }
 
-
-
-            result += "}";
+            result = result.Remove(result.Length - 3) + "\r\n}";
 
             return result;
         }
