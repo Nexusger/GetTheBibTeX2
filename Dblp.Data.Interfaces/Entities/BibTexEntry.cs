@@ -12,7 +12,7 @@ namespace Dblp.Data.Interfaces.Entities
         public int Id { get; set; }
 
         [DataMember]
-        [MaxLength(50)]
+        [MaxLength(150)]
         public string Key { get; set; }
 
         [DataMember]
