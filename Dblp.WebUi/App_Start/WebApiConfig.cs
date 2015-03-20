@@ -10,7 +10,7 @@ namespace Dblp.WebUi
             // Web-API-Konfiguration und -Dienste
           
             // Web-API-Routen
-            config.MapHttpAttributeRoutes();
+            //config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApiRoute",
