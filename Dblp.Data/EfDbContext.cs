@@ -23,22 +23,29 @@ namespace Dblp.Data
         {
             modelBuilder.Entity<Publication>()
          .Property(x => x.Key)
-         .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("ix_Publication_Key")));
+         .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("ix_Publication_Key") ));
             modelBuilder.Entity<Publication>()
          .Property(x => x.Title)
-         .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("ix_Publication_Title")));
+         .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("ix_Publication_Title") ));
             modelBuilder.Entity<Author>()
          .Property(x => x.Name)
          .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("ix_Author_Name")));
             modelBuilder.Entity<Conference>()
       .Property(x => x.ConferenceTitle)
-      .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("ix_Conference_ConferenceTitle")));
+      .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("ix_Conference_ConferenceTitle") ));
             modelBuilder.Entity<Conference>()
       .Property(x => x.Abbr)
       .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("ix_Conference_Abbr")));
             modelBuilder.Entity<BibTexEntry>()
 .Property(x => x.Key)
 .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("ix_BibTexEntry_Key")));
+            modelBuilder.Entity<LoadDetails>()
+         .Property(x => x.Key)
+         .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("ix_LoadDetail_Key") ));
+            modelBuilder.Entity<ConferenceEvent>()
+         .Property(x => x.Key)
+         .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("ix_Events_Key")));
+
         }
 
     }
