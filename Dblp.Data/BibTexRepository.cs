@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Dblp.Domain.Interfaces;
+using Dblp.Data.Interfaces;
 using Dblp.Helper;
 
 namespace Dblp.Data

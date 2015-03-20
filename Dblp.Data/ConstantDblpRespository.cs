@@ -1,4 +1,4 @@
-﻿using Dblp.Domain.Interfaces;
+﻿using Dblp.Data.Interfaces;
 
 namespace Dblp.Data
 {
