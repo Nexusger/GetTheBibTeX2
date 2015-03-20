@@ -23,8 +23,8 @@ namespace Dblp.WebUi.Controllers
             statusElements.Add(new StatusListElement()
             {
                 DisplayText = "Anzahl Autoren",
-                HoverText = "Mockdaten",
-                SpecialMarker = true,
+                HoverText = "e.g. Albrecht Fortenbacher",
+                SpecialMarker = false,
                 Value = numberOfAuthors
             });
             var numberOfConferences = _repo.NumberOfConferences();
