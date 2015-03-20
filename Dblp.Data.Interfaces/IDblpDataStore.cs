@@ -13,6 +13,7 @@ namespace Dblp.Data.Interfaces
         IQueryable<Author> Authors { get; }
         IQueryable<ConferenceEvent> ConferenceEvents { get; }
 
+        IQueryable<LoadDetails> LoadDetails { get; } 
     }
 
 

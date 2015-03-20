@@ -40,6 +40,14 @@ namespace Dblp.Domain.Concrete
 
         public LoadDetails DataLoadDetails()
         {
+            var details = _store.LoadDetails.FirstOrDefault();
+            if (details != null)
+            {
+                return new LoadDetails()
+                {
+                    LastLoaded = details.LastLoaded,AmountBhtFilesParsed = details.AmountBhtFilesParsed,LoadTime = details.LoadTime,SizeOfXml = details.SizeOfXml
+                };
+            }
             return new LoadDetails(){LastLoaded = DateTime.UtcNow,LoadTime = TimeSpan.FromMinutes(60),SizeOfXml = 99999};
         }
     }

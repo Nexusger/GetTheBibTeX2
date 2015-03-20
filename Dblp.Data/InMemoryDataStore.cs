@@ -46,5 +46,6 @@ namespace Dblp.Data
         public IQueryable<Publication> Publications { get; private set; }
         public IQueryable<Author> Authors { get; private set; }
         public IQueryable<ConferenceEvent> ConferenceEvents { get; private set; }
+        public IQueryable<LoadDetails> LoadDetails { get; private set; }
     }
 }

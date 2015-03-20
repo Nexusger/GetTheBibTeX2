@@ -25,5 +25,10 @@ namespace Dblp.Data
         {
             get { return _context.Events; }
         }
+
+        public IQueryable<LoadDetails> LoadDetails
+        {
+            get { return _context.LoadDetails; }
+        }
     }
 }
