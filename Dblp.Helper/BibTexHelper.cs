@@ -70,7 +70,7 @@ namespace Dblp.Helper
                 var attributeValue = (multipleNode as XElement).Value;
                 result += " and " + attributeValue;
             }
-            result += "}";
+            result += "},\r\n";
 
 
 

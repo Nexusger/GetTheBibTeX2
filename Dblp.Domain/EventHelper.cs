@@ -21,7 +21,7 @@ namespace Dblp.Domain
         public static ConferenceEvent ToDomainConferenceEvent(this Dblp.Data.Interfaces.Entities.ConferenceEvent incommingConferenceEvent)
         {
             var outgoingConferenceEvent = new ConferenceEvent();
-            outgoingConferenceEvent.Key = incommingConferenceEvent.Key;
+            outgoingConferenceEvent.Key = incommingConferenceEvent.EventKey;
             outgoingConferenceEvent.Title = incommingConferenceEvent.Title;
             outgoingConferenceEvent.Publications = incommingConferenceEvent.Publications.ToDomainPublications();
             return outgoingConferenceEvent;

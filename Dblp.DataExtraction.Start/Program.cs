@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Dblp.Data;
 using Dblp.Data.Extract;
+using Dblp.Data.Interfaces.Entities;
 using Dblp.Data.Saver;
 using Dblp.Helper;
 
@@ -14,19 +17,39 @@ namespace Dblp.DataExtraction.Start
         public const string PathToBhtFolder = @"D:\dblp\bht\db\conf\";
         static void Main(string[] args)
         {
-            //var repo = new InMemoryDataStore(PathToDblpXml, PathToBhtFolder);
-            //var saver = new EntityFrameWorkSaver(Settings.Default.BatchSize);
-            //saver.SaveConferences(repo.Conferences);
-            //repo = null;
-            //saver = null;
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+            var loadDetails = new LoadDetails();
 
-            var x = new XmlExtractor(@"D:\dblp\dblp-min.xml");
-            var a = new List<string>();
-            foreach (var y in x.SmallSearchResults.Where(t=>(!t.Key.Contains("persons")) && (!t.Key.Contains("www"))))
+            Console.WriteLine("Starting to load files");
+            //Save structure
+            var repo = new InMemoryDataStore(PathToDblpXml, PathToBhtFolder);
+            var saver = new EntityFrameWorkSaver(100);
+            Console.WriteLine("Starting to save structure");
+            saver.SaveConferences(repo.Conferences);
+            repo = null;
+            saver = null;
+
+            //Add Authors
+            Console.WriteLine("Updating datasets with authors");
+            saver = new EntityFrameWorkSaver(Settings.Default.BatchSize);
+            saver.UpdateStructureSetAuthor(XmlExtractor.Read(PathToDblpXml).Where(k => (k.Value.StartsWith("<inproceeding")) || k.Value.StartsWith("<proceeding")));
+
+            //Add rawdata
+            Console.WriteLine("Starting to load files");
+            saver = new EntityFrameWorkSaver(Settings.Default.BatchSize);
+            saver.SaveBibTexEntries(XmlExtractor.Read(PathToDblpXml).Where(k => (k.Value.StartsWith("<inproceeding"))||k.Value.StartsWith("<proceeding")).Select(t => new BibTexEntry()
             {
-                a.Add(y.Value.ToBibTeX());
-            }
-            File.WriteAllLines(@"c:\temp\bibtex2.bib",a);
+                Key = t.Key,
+                Content = t.Value.ToBibTeX()
+            }));
+            stopwatch.Stop();
+
+            loadDetails.LoadTime = stopwatch.Elapsed;
+            loadDetails.SizeOfXml = new FileInfo(PathToDblpXml).Length;
+            loadDetails.LastLoaded = DateTime.UtcNow;
+
+            saver.SaveLoadDetails(loadDetails);
         }
     }
 }

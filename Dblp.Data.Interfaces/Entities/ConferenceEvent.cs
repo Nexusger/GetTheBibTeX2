@@ -14,7 +14,7 @@ namespace Dblp.Data.Interfaces.Entities
 
         [DataMember(Name="EventKey")]
         [MaxLength(150)]
-        public string Key { get; set; }
+        public string EventKey { get; set; }
         
         [DataMember]
         public string Title { get; set; }
@@ -26,7 +26,7 @@ namespace Dblp.Data.Interfaces.Entities
 
         public override string ToString()
         {
-            return Key + " " + Title;
+            return EventKey + " " + Title;
         }
     }
 }

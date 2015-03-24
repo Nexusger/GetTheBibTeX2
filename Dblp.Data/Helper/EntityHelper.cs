@@ -17,7 +17,7 @@ namespace Dblp.Data.Helper
         //    var key = element.ExtractDblpKey();
         //    return new Person()
         //    {
-        //        Key= key,
+        //        EventKey= key,
         //        Mdate = mdate,
         //        Names = names,
         //        Url = url,
@@ -49,7 +49,7 @@ namespace Dblp.Data.Helper
         //    return new Proceeding()
         //    {
         //        MDate=mdate,
-        //        Key = key,
+        //        EventKey = key,
         //        Editors = editors,
         //        Title = title,
         //        BookTitle = title,

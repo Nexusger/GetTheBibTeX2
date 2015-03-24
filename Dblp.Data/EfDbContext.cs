@@ -8,7 +8,7 @@ namespace Dblp.Data
     public class EfDbContext : DbContext
     {
         public EfDbContext()
-            : base("name=EfDbContext")
+            : base("name=geththebibtex_db")
         {
         }
         public DbSet<Conference> Conferences { get; set; }
@@ -43,7 +43,7 @@ namespace Dblp.Data
          .Property(x => x.Key)
          .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("ix_LoadDetail_Key") ));
             modelBuilder.Entity<ConferenceEvent>()
-         .Property(x => x.Key)
+         .Property(x => x.EventKey)
          .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("ix_Events_Key")));
 
         }

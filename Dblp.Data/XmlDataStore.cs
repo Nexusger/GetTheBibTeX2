@@ -27,14 +27,14 @@ namespace Dblp.Data
             };
             foreach (var conference in _structureRepo)
             {
-    //            _searchResultRepo.Add(new SearchResult(conference.Key, conference.ConferenceTitle, 0, SearchResultSourceType.Conference, ""));
+    //            _searchResultRepo.Add(new SearchResult(conference.EventKey, conference.ConferenceTitle, 0, SearchResultSourceType.Conference, ""));
                 foreach (var @event in conference.Events)
                 {
-       //             _searchResultRepo.Add(new SearchResult(@event.Key, @event.Title, 0, SearchResultSourceType.Conference, ""));
+       //             _searchResultRepo.Add(new SearchResult(@event.EventKey, @event.Title, 0, SearchResultSourceType.Conference, ""));
                     if(@event.Publications!=null)
                     foreach (var publication in @event.Publications)
                     {
-           //             _searchResultRepo.Add(new SearchResult(publication.Key,publication.Title,0,SearchResultSourceType.Paper, ""));
+           //             _searchResultRepo.Add(new SearchResult(publication.EventKey,publication.Title,0,SearchResultSourceType.Paper, ""));
                     }
                 }
             }
@@ -88,7 +88,7 @@ namespace Dblp.Data
         {
             get
             {
-                return _structureRepo.AsQueryable();//.Select(t=> { t.ConferenceTitle = _smallSearchResults.FirstOrDefault(k=>k.Key==t.Key).Value;return t;});
+                return _structureRepo.AsQueryable();//.Select(t=> { t.ConferenceTitle = _smallSearchResults.FirstOrDefault(k=>k.EventKey==t.EventKey).Value;return t;});
             }
 
         }

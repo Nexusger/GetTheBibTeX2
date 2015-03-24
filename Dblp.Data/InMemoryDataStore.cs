@@ -18,7 +18,7 @@ namespace Dblp.Data
 
             var keyTitleLookUp = new KeyTitleLookUp(pathTodblpXml);
 
-            Parallel.ForEach(_extractor.Structures, conference =>
+            Parallel.ForEach(_extractor.Structures.Keys, conference =>
             {
                 foreach (var @event in conference.Events)
                 {
@@ -40,7 +40,7 @@ namespace Dblp.Data
 
         public IQueryable<Conference> Conferences
         {
-            get { return _extractor.Structures.AsQueryable(); }
+            get { return _extractor.Structures.Keys.AsQueryable(); }
         }
 
         public IQueryable<Publication> Publications { get; private set; }

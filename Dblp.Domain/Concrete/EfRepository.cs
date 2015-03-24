@@ -76,7 +76,7 @@ namespace Dblp.Domain.Concrete
 
         public SearchResult GetConferenceEventsByKeyAsSearchResult(string conferenceEventKey)
         {
-            return _store.ConferenceEvents.Where(t => t.Key == conferenceEventKey).Select(k=> (new SearchResult() { Key = k.Key, DisplayText = k.Title + " (" + k.Publications.Count + " Publikationen )", Usage = 0, SearchResultSourceType = SearchResultSourceType.Event, Relation = "" })).FirstOrDefault();
+            return _store.ConferenceEvents.Where(t => t.EventKey == conferenceEventKey).Select(k=> (new SearchResult() { Key = k.EventKey, DisplayText = k.Title + " (" + k.Publications.Count + " Publikationen )", Usage = 0, SearchResultSourceType = SearchResultSourceType.Event, Relation = "" })).FirstOrDefault();
         }
 
         public IQueryable<SearchResult> GetConferencesAsSearchResults(int maxAmount)
@@ -162,7 +162,7 @@ namespace Dblp.Domain.Concrete
 
         public IQueryable<SearchResult> GetPublicationsForEventsAsSearchResults(string eventKey)
         {
-            var conferenceevent = _store.ConferenceEvents.FirstOrDefault(t => t.Key == eventKey);
+            var conferenceevent = _store.ConferenceEvents.FirstOrDefault(t => t.EventKey == eventKey);
             return conferenceevent.Publications.Select(t => (new SearchResult()
             {
                 Key = t.Key,

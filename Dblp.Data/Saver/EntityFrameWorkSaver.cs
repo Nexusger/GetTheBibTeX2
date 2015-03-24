@@ -24,8 +24,8 @@ namespace Dblp.Data.Saver
         {
             var i = 0;
             var db = new EfDbContext();
-
-
+            var sw = new Stopwatch();
+            sw.Start();
             foreach (var conference in conferences)
             {
                 db.Configuration.AutoDetectChangesEnabled = false;
@@ -41,7 +41,8 @@ namespace Dblp.Data.Saver
             }
             db.SaveChanges();
             db.Dispose();
-
+            sw.Stop();
+            Console.WriteLine(sw.ElapsedMilliseconds/1000);
             return true;
         }
         public bool SaveBibTexEntries(IEnumerable<BibTexEntry> entries)

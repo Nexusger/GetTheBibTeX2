@@ -7,45 +7,30 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using Dblp.Data.Interfaces.Entities;
 using Dblp.Helper;
+using System.Collections.Concurrent;
 
 namespace Dblp.Data.Extract
 {
     public class StructureExtractor
     {
-        public HashSet<Conference> Structures { get; private set; }
+        public ConcurrentDictionary<Conference,byte> Structures { get; private set; }
     
         const string IndexBht = @"\index.bht";
         public StructureExtractor()
         {
-            Structures = new HashSet<Conference>();
+            Structures = new ConcurrentDictionary<Conference,byte>();
         }
 
-        public HashSet<Conference> StartScan(string path)
+        public ConcurrentDictionary<Conference,byte> StartScan(string path)
         {
-            foreach(var file in Directory.GetDirectories(path))
+            Parallel.ForEach(Directory.GetDirectories(path), file =>
             {
                 if (Directory.Exists(file))
                 {
                     ProcessDirectory(file);
                 }
-            }
-            return Structures;
-        }
-
-        public async Task<HashSet<Conference>> StartScanAsync(string path)
-        {
-            HashSet<Conference> conferences = await Task.Run(() =>
-            {
-                foreach (var file in Directory.GetDirectories(path))
-                {
-                    if (Directory.Exists(file))
-                    {
-                        ProcessDirectory(file);
-                    }
-                }
-                return Structures;
             });
-            return conferences;
+            return Structures;
         }
 
         private void ProcessDirectory(string path)
@@ -82,7 +67,7 @@ namespace Dblp.Data.Extract
             {
                 AddConferenceEvent(xNode, subConferenceKey, conference);
             }
-            Structures.Add(conference);
+            Structures.GetOrAdd(conference,0);
             foreach (var fileName in FilesInPath(path))
             {
                 try
@@ -116,12 +101,14 @@ namespace Dblp.Data.Extract
                 {
                     subConferenceKey = elem.Attribute("key").Value;
 
-                    if (conference.Events.All(t => t.Key != subConferenceKey))
+                    if (conference.Events.All(t => t.EventKey != subConferenceKey))
                     {
                         conference.Events.Add(
                             new ConferenceEvent
                             {
-                                Key = elem.Attribute("key").Value
+                                EventKey = elem.Attribute("key").Value,
+                                //Setting dummy Value
+                                Title = elem.Attribute("key").Value
                             });
                     }
                 }
@@ -135,7 +122,7 @@ namespace Dblp.Data.Extract
             var publicationElements =
                 xelementConferences.XPathSelectElements("ul/li/cite")
                     .Select(t => new Publication { Key = t.Attribute("key").Value });
-            var firstEvent = conference.Events.FirstOrDefault(t => t.Key == citeKey);
+            var firstEvent = conference.Events.FirstOrDefault(t => t.EventKey == citeKey);
             if (firstEvent != null)
             {
                 firstEvent.Publications =
