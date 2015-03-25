@@ -10,7 +10,7 @@
     <ul>
         @foreach (var searchResult in Model.Cart.SearchResults)
         {
-            <li><input type="checkbox"> @searchResult.DisplayText</li>
+            <li>@searchResult.DisplayText</li>
         }
     </ul>
     <div class="btn-group" role="group" aria-label="Download der BibTeX Datei">

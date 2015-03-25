@@ -170,6 +170,8 @@
     <Content Include="Scripts\typeahead.bundle.min.js" />
     <Content Include="Scripts\typeahead.jquery.js" />
     <Content Include="Scripts\typeahead.jquery.min.js" />
+    <None Include="Properties\PublishProfiles\GetTheBibTeX - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\GetTheBibTeX - Web Deploy.pubxml" />
     <None Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
