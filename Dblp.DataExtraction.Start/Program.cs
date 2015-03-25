@@ -26,14 +26,15 @@ namespace Dblp.DataExtraction.Start
             var repo = new InMemoryDataStore(PathToDblpXml, PathToBhtFolder);
             var saver = new EntityFrameWorkSaver(100);
             Console.WriteLine("Starting to save structure");
-            saver.SaveConferences(repo.Conferences);
+            //saver.SaveConferences(repo.Conferences);
+            saver.SaveConferencesWithAddedAuthors(repo.Conferences, XmlExtractor.Read(PathToDblpXml).Where(k => (k.Value.StartsWith("<inproceeding")) || k.Value.StartsWith("<proceeding")));
             repo = null;
             saver = null;
 
             //Add Authors
-            Console.WriteLine("Updating datasets with authors");
-            saver = new EntityFrameWorkSaver(Settings.Default.BatchSize);
-            saver.UpdateStructureSetAuthor(XmlExtractor.Read(PathToDblpXml).Where(k => (k.Value.StartsWith("<inproceeding")) || k.Value.StartsWith("<proceeding")));
+            //Console.WriteLine("Updating datasets with authors");
+            //saver = new EntityFrameWorkSaver(Settings.Default.BatchSize);
+            //saver.UpdateStructureSetAuthor(XmlExtractor.Read(PathToDblpXml).Where(k => (k.Value.StartsWith("<inproceeding")) || k.Value.StartsWith("<proceeding")));
 
             //Add rawdata
             Console.WriteLine("Starting to load files");

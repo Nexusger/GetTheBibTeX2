@@ -63,10 +63,11 @@ namespace Dblp.Data.Extract
             };
 
             string subConferenceKey = title;
-            foreach (var xNode in xelement.Nodes())
-            {
-                AddConferenceEvent(xNode, subConferenceKey, conference);
-            }
+            //foreach (var xNode in xelement.Nodes())
+            //{
+            //    AddConferenceEvent(xNode, subConferenceKey, conference);
+            //}
+            conference.Events.AddRange(ExtracConferenceEvents(xelement, conference));
             Structures.GetOrAdd(conference,0);
             foreach (var fileName in FilesInPath(path))
             {
@@ -114,6 +115,17 @@ namespace Dblp.Data.Extract
                 }
             }
         
+        }
+
+        private static List<ConferenceEvent> ExtracConferenceEvents(XElement xelement,Conference conference)
+        {
+            var conferenceEvents = new List<ConferenceEvent>();
+            var conferenceEventKeys = xelement.XPathSelectElements("cite").Select(t=>t.Attribute("key").Value);
+            foreach (var conferenceEventKey in conferenceEventKeys)
+            {
+                conferenceEvents.Add(new ConferenceEvent(){Confercence =  conference,EventKey = conferenceEventKey,Title = conferenceEventKey});
+            }
+            return conferenceEvents;
         }
         private static void UpdateConferenceEvents(string fileName, Conference conference)
         {
