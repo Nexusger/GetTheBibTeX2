@@ -57,6 +57,15 @@ namespace Dblp.WebUi.Controllers
             return cart;
         }
 
+        private void ClearCart()
+        {
+            var cart = (ShoppingCart)Session["ShoppingCart"];
+            if (cart != null)
+            {
+                Session["ShoppingCart"] = null;
+            }
+        }
+
         public ViewResult Index(string returnUrl)
         {
             var cartIndexViewModel = new CartIndexViewModel
@@ -65,6 +74,16 @@ namespace Dblp.WebUi.Controllers
                 ReturnUrl = returnUrl
             };
             return View(cartIndexViewModel);
+        }
+
+        public ViewResult Clear()
+        {
+            ClearCart();
+            var cartIndexViewModel = new CartIndexViewModel
+            {
+                Cart = GetCart()
+            };
+            return View("Index",cartIndexViewModel);
         }
 
         public FileResult Download()

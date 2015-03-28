@@ -14,7 +14,10 @@
         }
     </ul>
     <div class="btn-group" role="group" aria-label="Download der BibTeX Datei">
-        @Html.ActionLink("Download der BibTeX Datei", "Download", "ShoppingCart", null, new { @class = "btn btn-success" })
+        @Html.ActionLink("Download der BibTeX Datei", "Download", "ShoppingCart", null, new {@class = "btn btn-success"})
+    </div>
+    <div class="btn-group" role="group" aria-label="Download der BibTeX Datei">
+        @Html.ActionLink("Leeren des Warenkorbs", "Clear", "ShoppingCart", null, new { @class = "btn btn-danger" })
     </div>
 }
 else
