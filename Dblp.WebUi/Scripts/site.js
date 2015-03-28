@@ -11,7 +11,7 @@ var publications = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace("DisplayText"),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     limit: 10,
-    prefetch: '/api/Prefetch/GetConferences',
+    prefetch: '/api/Prefetch/GetPublications',
     remote: {
         url: '/api/Query/GetPublications/',
         replace: function (url, encodedQuery) {
