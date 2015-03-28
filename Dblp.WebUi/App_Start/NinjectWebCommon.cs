@@ -1,16 +1,17 @@
+using Dblp.Domain.Infrastructure;
 using System;
 using System.Web;
-using Dblp.WebUi;
-using Dblp.Domain.Infrastructure;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject;
 using Ninject.Web.Common;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(NinjectWebCommon), "Stop")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Dblp.WebUi.App_Start.NinjectWebCommon), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(Dblp.WebUi.App_Start.NinjectWebCommon), "Stop")]
 
-namespace Dblp.WebUi
+namespace Dblp.WebUi.App_Start
 {
+
+
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
