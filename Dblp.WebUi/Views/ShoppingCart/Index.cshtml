@@ -1,7 +1,7 @@
 ﻿@model Dblp.WebUi.Models.CartIndexViewModel
 @{
     bool resultsAvailable = Model != null && Model.Cart.SearchResults != null && Model.Cart.SearchResults.Count() > 0;
-    ViewBag.Title = "Warenkorb";
+    ViewBag.Title = "Merkliste";
 }
 
 @if (resultsAvailable)
@@ -17,11 +17,11 @@
         @Html.ActionLink("Download der BibTeX Datei", "Download", "ShoppingCart", null, new {@class = "btn btn-success"})
     </div>
     <div class="btn-group" role="group" aria-label="Download der BibTeX Datei">
-        @Html.ActionLink("Leeren des Warenkorbs", "Clear", "ShoppingCart", null, new { @class = "btn btn-danger" })
+        @Html.ActionLink("Leeren der Merkliste", "Clear", "ShoppingCart", null, new { @class = "btn btn-danger" })
     </div>
 }
 else
 {
-    <h2>Ihr Warenkorb ist leer</h2>
+    <h2>Ihre Merkliste ist leer</h2>
     <p>Fügen Sie @Html.ActionLink("BibTeX Einträge", "Index", "Home") hinzu.</p>
 }
